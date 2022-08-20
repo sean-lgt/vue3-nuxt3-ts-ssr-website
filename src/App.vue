@@ -8,20 +8,30 @@ console.log('🚀【import.meta.env】', import.meta.env)
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="wrapper">
+    <div>
+      <a href="https://vitejs.dev" target="_blank">
+        <img src="/vite.svg" class="logo" alt="Vite logo" />
+      </a>
+      <a href="https://vuejs.org/" target="_blank">
+        <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
+      </a>
+    </div>
+    <button @click="() => router.push({ path: '/home' })">首页</button>
+    <button @click="() => router.push({ path: '/mine' })">个人中心页</button>
+    <router-link to="/home">link-首页</router-link>
+    <router-link to="/mine">link-个人中心</router-link>
+    <router-view></router-view>
   </div>
-  <button @click="() => router.push({ path: '/home' })">首页</button>
-  <button @click="() => router.push({ path: '/mine' })">个人中心页</button>
-  <router-link to="/home">link-首页</router-link>
-  <router-link to="/mine">link-个人中心</router-link>
-  <router-view></router-view>
 </template>
+
+<style lang="scss" scoped>
+.wrapper {
+  button {
+    font-size: 40px;
+  }
+}
+</style>
 
 <style scoped>
 .logo {

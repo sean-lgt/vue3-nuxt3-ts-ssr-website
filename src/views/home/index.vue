@@ -10,12 +10,21 @@ console.log('🚀【route】', route.params)
 <template>
   <div>
     首页
+    <div class="text">
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt placeat
+      iure iusto, itaque dolor perferendis veniam, eaque cumque quae
+      exercitationem in quis natus aliquam eos, consequatur sunt quos neque
+      dolore?
+    </div>
     <button @click="() => router.push({ path: '/mine', query: { id: 1 } })">
       跳转到个人中心
     </button>
   </div>
 </template>
 
+<style lang="scss" scoped>
+@import '@/assets/scss/home/index.scss';
+</style>
 <style scoped>
 .logo {
   height: 6em;
