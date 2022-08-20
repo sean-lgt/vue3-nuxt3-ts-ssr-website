@@ -1,4 +1,4 @@
-import { createRouter,createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import home from '@/views/home/index.vue'
 import mine from '@/views/mine/index.vue'
 
@@ -9,7 +9,7 @@ const routes = [
     component: home,
     meta: {
       title: '首页',
-      keepAlive:false
+      keepAlive: false
     }
   },
   {
@@ -18,9 +18,9 @@ const routes = [
     component: mine,
     meta: {
       title: '我的',
-      keepAlive:false
+      keepAlive: false
     }
-  },
+  }
 ]
 
 // 创建路由
