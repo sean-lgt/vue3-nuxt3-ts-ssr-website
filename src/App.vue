@@ -3,8 +3,15 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 // import HelloWorld from './components/HelloWorld.vue'
 import { useRouter } from 'vue-router'
+import { getRoomList } from './api/index'
 const router = useRouter()
 console.log('🚀【import.meta.env】', import.meta.env)
+const fetchList = async () => {
+  const result = await getRoomList()
+  console.log('🚀【请求获取到的数据】', result)
+}
+
+fetchList()
 </script>
 
 <template>
