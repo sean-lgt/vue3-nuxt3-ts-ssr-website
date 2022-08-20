@@ -2,14 +2,17 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import { useRouter, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 const router = useRouter()
 const route = useRoute()
 console.log('🚀【route】', route.params)
+console.log('🚀【i18n】', useI18n)
+const { t } = useI18n()
 </script>
 
 <template>
   <div>
-    首页
+    {{ t('message.home') }}
     <div class="text">
       Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt placeat
       iure iusto, itaque dolor perferendis veniam, eaque cumque quae

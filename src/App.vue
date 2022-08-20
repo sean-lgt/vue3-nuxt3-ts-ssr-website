@@ -2,34 +2,48 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 // import HelloWorld from './components/HelloWorld.vue'
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import zhCn from 'element-plus/lib/locale/lang/zh-cn'
+import en from 'element-plus/lib/locale/lang/en'
 import { useRouter } from 'vue-router'
 import { getRoomList } from './api/index'
+
 const router = useRouter()
 console.log('🚀【import.meta.env】', import.meta.env)
 const fetchList = async () => {
   const result = await getRoomList()
   console.log('🚀【请求获取到的数据】', result)
 }
-
 fetchList()
+
+const valueDate = ''
+const { locale } = useI18n()
+console.log('🚀【lang】', locale.value)
+const localeLanguage = ref(zhCn)
+const changeLang = (lang) => {
+  console.log('🚀【sdfasad】', lang)
+  localeLanguage.value = lang
+  locale.value = lang.name
+
+  console.log('🚀【lang】', locale.value)
+}
 </script>
 
 <template>
-  <div class="wrapper">
-    <div>
-      <a href="https://vitejs.dev" target="_blank">
-        <img src="/vite.svg" class="logo" alt="Vite logo" />
-      </a>
-      <a href="https://vuejs.org/" target="_blank">
-        <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-      </a>
+  <el-config-provider :locale="localeLanguage">
+    <el-date-picker v-model="valueDate" type="date" placeholder="Pick a day" />
+    <div class="wrapper">
+      APP
+      <el-button @click="changeLang(zhCn)">中文</el-button>
+      <el-button @click="changeLang(en)">英文</el-button>
+      <button @click="() => router.push({ path: '/home' })">首页</button>
+      <button @click="() => router.push({ path: '/mine' })">个人中心页</button>
+      <router-link to="/home">link-首页</router-link>
+      <router-link to="/mine">link-个人中心</router-link>
+      <router-view></router-view>
     </div>
-    <button @click="() => router.push({ path: '/home' })">首页</button>
-    <button @click="() => router.push({ path: '/mine' })">个人中心页</button>
-    <router-link to="/home">link-首页</router-link>
-    <router-link to="/mine">link-个人中心</router-link>
-    <router-view></router-view>
-  </div>
+  </el-config-provider>
 </template>
 
 <style lang="scss" scoped>
