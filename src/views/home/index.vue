@@ -3,11 +3,17 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import IndexedDB from '../../utils/indexedDB'
 const router = useRouter()
 const route = useRoute()
 console.log('🚀【route】', route.params)
 console.log('🚀【i18n】', useI18n)
 const { t } = useI18n()
+// 数据库indexedDB
+const airbnbDB = new IndexedDB('airbnb')
+// 打开数据库
+// airbnbDB.openStore('room', 'id')
+airbnbDB.openStore('elephant', 'id', ['nose', 'ear'])
 </script>
 
 <template>
