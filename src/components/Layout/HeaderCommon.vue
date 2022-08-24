@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { ref, defineEmits } from 'vue'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import en from 'element-plus/lib/locale/lang/en'
 import { saveLanguageApi, fetchLanguageApi } from '../../api/layout/index'
 
+const router = useRouter()
 const { t } = useI18n()
 const activeIndex = ref('1')
 // changeLang
@@ -16,6 +19,8 @@ const handleSelect = (e: any) => {
   } else if (e === 'en') {
     emit('changeLang', en)
     saveLanguage(en) // 调用接口保存
+  } else if (e === 'login') {
+    router.push({ name: 'login' })
   }
   console.log('🚀【点击el-menu】', e)
 }
@@ -68,6 +73,9 @@ getCurrentLanguage()
           class="avatar"
         />
       </el-menu-item>
+      <el-menu-item index="login"
+        >{{ t('login.loginTab') }}/{{ t('login.signTab') }}</el-menu-item
+      >
     </el-menu>
   </div>
 </template>

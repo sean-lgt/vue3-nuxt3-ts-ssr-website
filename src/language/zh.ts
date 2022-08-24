@@ -33,5 +33,16 @@ export default {
     service: '客服支持',
     help: '帮助',
     neighbors: '邻里支持'
+  },
+  login: {
+    // 登录页
+    loginBtn: '进入爱此迎',
+    signBtn: '立即注册',
+    loginTab: '登录',
+    signTab: '注册',
+    placeMobile: '请输入正确的手机号',
+    placePass: '请输入正确的密码',
+    logout: '退出',
+    loginLost: '您还未登录，请先登录哦~'
   }
 }

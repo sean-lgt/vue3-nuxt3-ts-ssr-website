@@ -32,5 +32,16 @@ export default {
     service: 'Service',
     help: 'Help',
     neighbors: 'Neighbors'
+  },
+  login: {
+    // 登录页
+    loginBtn: 'Log in Airbnb',
+    signBtn: 'Sign up',
+    loginTab: 'Log in',
+    signTab: 'Sign up',
+    placeMobile: 'Please  write correct mobile number',
+    placePass: 'Please white corret password',
+    logout: 'Logout',
+    loginLost: 'Please login first'
   }
 }
