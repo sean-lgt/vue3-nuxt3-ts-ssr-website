@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { ref, defineEmits } from 'vue'
+import { useI18n } from 'vue-i18n'
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import en from 'element-plus/lib/locale/lang/en'
 import { saveLanguageApi, fetchLanguageApi } from '../../api/layout/index'
+
+const { t } = useI18n()
 const activeIndex = ref('1')
 // changeLang
 const emit = defineEmits<{ (e: 'changeLang', language: any): void }>()
@@ -51,12 +54,12 @@ getCurrentLanguage()
       mode="horizontal"
       @select="handleSelect"
     >
-      <el-menu-item index="orders">房屋订单中心</el-menu-item>
-      <el-menu-item index="records">历史足迹</el-menu-item>
+      <el-menu-item index="orders"> {{ t('header.orders') }}</el-menu-item>
+      <el-menu-item index="records">{{ t('header.records') }}</el-menu-item>
       <el-sub-menu index="language">
-        <template #title>国际化切换</template>
+        <template #title>{{ t('header.language') }}</template>
         <el-menu-item index="zh">中文</el-menu-item>
-        <el-menu-item index="en">英文</el-menu-item>
+        <el-menu-item index="en">English</el-menu-item>
       </el-sub-menu>
       <el-menu-item index="avatar">
         <img

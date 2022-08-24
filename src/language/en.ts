@@ -3,6 +3,12 @@ export default {
     home: 'home',
     mine: 'mine'
   },
+  header: {
+    // 头部组件
+    orders: 'Housing order center',
+    records: 'The historical footprints',
+    language: 'Language'
+  },
   footer: {
     // 底部组件
     airbnb: 'Aircnc',

@@ -4,6 +4,12 @@ export default {
     home: '首页',
     mine: '个人中心'
   },
+  header: {
+    // 头部组件
+    orders: '房源订单中心',
+    records: '历史足迹',
+    language: '语言'
+  },
   footer: {
     // 底部组件
     airbnb: '爱此迎',
