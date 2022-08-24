@@ -2,17 +2,45 @@
 import { ref, defineEmits } from 'vue'
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import en from 'element-plus/lib/locale/lang/en'
+import { saveLanguageApi, fetchLanguageApi } from '../../api/layout/index'
 const activeIndex = ref('1')
 // changeLang
 const emit = defineEmits<{ (e: 'changeLang', language: any): void }>()
 const handleSelect = (e: any) => {
   if (e === 'zh') {
     emit('changeLang', zhCn)
+    saveLanguage(zhCn)
   } else if (e === 'en') {
     emit('changeLang', en)
+    saveLanguage(en) // 调用接口保存
   }
   console.log('🚀【点击el-menu】', e)
 }
+// mock接口，保存当前语言包
+const saveLanguage = (language: any) => {
+  saveLanguageApi(language).then((res) => {
+    const { success } = res
+    if (success) {
+      console.log('🚀【保存当前语言包成功】', success)
+    }
+  })
+}
+// mock接口 获取当前语言包
+const getCurrentLanguage = () => {
+  fetchLanguageApi().then((res) => {
+    const { success, result } = res
+    const { name } = result || {}
+    if (success) {
+      console.log('🚀【查询当前语言包成功】', result)
+      if (name.name === 'zh') {
+        emit('changeLang', zhCn)
+      } else if (name.name === 'en') {
+        emit('changeLang', en)
+      }
+    }
+  })
+}
+getCurrentLanguage()
 </script>
 <template>
   <div class="header-common">

@@ -40,11 +40,11 @@ const getItem = () => {
 }
 
 // 自建mock接口
-const fetchAllList = async () => {
-  const result = await getElephant()
-  console.log('🚀【mock请求获取到的数据】', result)
-}
-fetchAllList()
+// const fetchAllList = async () => {
+//   const result = await getElephant()
+//   console.log('🚀【mock请求获取到的数据】', result)
+// }
+// fetchAllList()
 </script>
 
 <template>
