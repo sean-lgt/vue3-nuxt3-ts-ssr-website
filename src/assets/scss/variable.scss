@@ -5,3 +5,18 @@ $red:red;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+// 主体基本样式
+@mixin main-wrapper($tb:0px) {
+  width: 1048px;
+  margin: $tb auto;
+}
+
+// flex布局
+@mixin flex-layout($dir:column,$justify:center,$align:center){
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: wrap;
+}

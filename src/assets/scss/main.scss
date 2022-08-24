@@ -6,3 +6,7 @@ body,html,p{
 body{
   padding: 0;
 }
+
+.main-container{
+  min-height: calc(100vh - 402px);
+}

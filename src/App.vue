@@ -3,6 +3,7 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 // import HelloWorld from './components/HelloWorld.vue'
 import HeaderCommon from './components/Layout/HeaderCommon.vue'
+import FooterCommon from './components/Layout/FooterCommon.vue'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
@@ -36,7 +37,11 @@ const changeLang = (lang: any) => {
     <!-- 头部 -->
     <header-common @changeLang="changeLang"></header-common>
     <!-- 主体 -->
-    <router-view></router-view>
+    <div class="main-container">
+      <router-view></router-view>
+    </div>
+    <!-- 底部 -->
+    <footer-common></footer-common>
   </el-config-provider>
 </template>
 
