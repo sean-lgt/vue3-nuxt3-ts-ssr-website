@@ -22,7 +22,7 @@ export async function saveLanguageApi(lang: any) {
     lock: true,
     background: 'rgba(0,0,0,0.7)'
   })
-  await airbnb.airbnbDB.openStore(storeName, 'id') // TODO:需要先打开仓库
+  // await airbnb.airbnbDB.openStore(storeName, 'id') // TODO:需要先打开仓库
   // 先查询是否存在
   const resultOr: IResultOr = await airbnb.airbnbDB
     .getItem(storeName, 1)
@@ -66,7 +66,8 @@ export async function fetchLanguageApi() {
     lock: true,
     background: 'rgba(0,0,0,0.1)'
   })
-  await airbnb.airbnbDB.openStore(storeName, 'id') // TODO:需要先打开仓库
+  // await airbnb.airbnbDB.openStore(storeName, 'id') // TODO:需要先打开仓库
+  await airbnb.airbnbDB.openStore({ ...airbnb.languageObjectStore })
   const result: IResultOr = await airbnb.airbnbDB
     .getItem(storeName, 1)
     .then((res) => {

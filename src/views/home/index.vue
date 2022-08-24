@@ -3,41 +3,41 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import IndexedDB from '../../utils/indexedDB'
-import { getElephant } from '../../api/index'
+// import IndexedDB from '../../utils/indexedDB'
+// import { getElephant } from '../../api/index'
 const router = useRouter()
 const route = useRoute()
 console.log('🚀【route】', route.params)
 console.log('🚀【i18n】', useI18n)
 const { t } = useI18n()
 // 数据库indexedDB
-const airbnbDB = new IndexedDB('airbnb')
+// const airbnbDB = new IndexedDB('airbnb')
 // 打开数据库
 // airbnbDB.openStore('room', 'id')
-airbnbDB.openStore('elephant', 'id', ['nose', 'ear'])
-// 增加/修改
-const addDB = () => {
-  airbnbDB.updateItem('elephant', {
-    nose: '3333m',
-    ear: '比较大'
-  })
-}
-const updateDB = () => {
-  airbnbDB.updateItem('elephant', {
-    nose: '3333m',
-    ear: '比较大',
-    id: 3
-  })
-}
-const deleteDB = () => {
-  airbnbDB.deleteItem('elephant', 4)
-}
-const getAllList = () => {
-  airbnbDB.getList('elephant')
-}
-const getItem = () => {
-  airbnbDB.getItem('elephant', 3)
-}
+// airbnbDB.openStore('elephant', 'id', ['nose', 'ear'])
+// // 增加/修改
+// const addDB = () => {
+//   airbnbDB.updateItem('elephant', {
+//     nose: '3333m',
+//     ear: '比较大'
+//   })
+// }
+// const updateDB = () => {
+//   airbnbDB.updateItem('elephant', {
+//     nose: '3333m',
+//     ear: '比较大',
+//     id: 3
+//   })
+// }
+// const deleteDB = () => {
+//   airbnbDB.deleteItem('elephant', 4)
+// }
+// const getAllList = () => {
+//   airbnbDB.getList('elephant')
+// }
+// const getItem = () => {
+//   airbnbDB.getItem('elephant', 3)
+// }
 
 // 自建mock接口
 // const fetchAllList = async () => {

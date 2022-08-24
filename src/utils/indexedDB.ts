@@ -1,5 +1,7 @@
 // 打开数据库
 
+import userObjectStore from '../db/objectStores/user'
+
 export default class DB {
   private dbName: string // 数据库名称
   private db: any // 数据库对象
@@ -11,9 +13,12 @@ export default class DB {
   /**
    * @description: 打开数据库
    * @return {*}
+   * @param {any} stores 对象仓库列表
    */
-  public openStore(storeName: string, keyPath: string, indexs?: Array<string>) {
-    const request = window.indexedDB.open(this.dbName, 1)
+  public openStore(stores: any) {
+    console.log('🚀【拿到的stores】', stores)
+    // 数据库名、版本号
+    const request = window.indexedDB.open(this.dbName, 2)
     return new Promise((resolve, reject) => {
       request.onsuccess = (event: any) => {
         // 数据库打开成功
@@ -30,16 +35,26 @@ export default class DB {
         // 数据库升级成功
         console.log('🚀【数据库升级成功】', event)
         const { result }: any = event.target
-        const store = result.createObjectStore(storeName, {
-          autoIncrement: true,
-          keyPath
-        })
-        // store.createIndex() //新建索引
-        indexs?.map((v: string) => {
-          return store.createIndex(v, v, { unique: false })
-        })
-        store.transaction.oncomplete = (event: any) => {
-          console.log('🚀【创建对象仓库成功】', event)
+        for (const storeName in stores) {
+          // 初始化多个ojectStore对象仓库
+          const { keyPath, indexs } = stores[storeName]
+          if (!result.objectStoreNames.contains(storeName)) {
+            // 没有表则新建表
+            // keyPath：主键，主键（key）是默认建立索引的属性； autoIncrement：是否自增；createObjectStore会返回一个对象仓库objectStore(即新建一个表)
+            const store = result.createObjectStore(storeName, {
+              autoIncrement: true,
+              keyPath
+            })
+            if (indexs && indexs.length) {
+              indexs.map((v: string) =>
+                // createIndex可以新建索引，unique字段是否唯一
+                store.createIndex(v, v, { unique: false })
+              )
+            }
+            store.transaction.oncomplete = (e: any) => {
+              console.log(`🚀【${storeName}】创建对象仓库成功`)
+            }
+          }
         }
       }
     })
@@ -103,6 +118,7 @@ export default class DB {
       request.onerror = (event: any) => {
         // 数据库打开成功
         console.log('🚀【数据查询失败】', event)
+        reject(event)
       }
     })
   }
