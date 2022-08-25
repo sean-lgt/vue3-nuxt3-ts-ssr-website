@@ -14,7 +14,7 @@ import { IResultOr } from '@/api/interface'
 const { proxy } = getCurrentInstance()!
 const router = useRouter()
 const { t } = useI18n()
-const activeIndex = ref('1')
+const activeIndex = ref('records')
 // changeLang
 const emit = defineEmits<{ (e: 'changeLang', language: any): void }>()
 const handleSelect = (e: any) => {
@@ -85,7 +85,7 @@ const userStatus = window.localStorage.getItem('userStatus') || 0
     <img src="../../assets/images/layout/logo.png" alt="airbnb" class="logo" />
     <el-menu
       :default-active="activeIndex"
-      class="el-menu-demo"
+      :ellipsis="false"
       mode="horizontal"
       @select="handleSelect"
     >
@@ -105,7 +105,7 @@ const userStatus = window.localStorage.getItem('userStatus') || 0
         /></template>
         <el-menu-item index="logout">{{ t('login.logout') }}</el-menu-item>
       </el-sub-menu>
-      <el-menu-item index="login" v-else>
+      <el-menu-item index="login" v-if="userStatus != 1">
         {{ t('login.loginTab') }}/{{ t('login.signTab') }}
       </el-menu-item>
     </el-menu>
@@ -114,4 +114,9 @@ const userStatus = window.localStorage.getItem('userStatus') || 0
 
 <style lang="scss" scoped>
 @import '@/assets/scss/layout/commonHeader.scss';
+</style>
+<style>
+.header-common .el-menu .el-sub-menu__title {
+  font-size: 16px;
+}
 </style>

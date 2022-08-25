@@ -1,46 +1,14 @@
 <script setup lang="ts">
-import { reactive, ref, getCurrentInstance } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
+import useFormProperties from '@/composables/login/useFormProperties'
+import useFormOperates from '@/composables/login/useFormOperates'
 import { useI18n } from 'vue-i18n'
-import { userSignApi, userLoginApi } from '../../api/login'
-import { IResultOr } from '../../api/interface'
-interface IRuleFrom {
-  mobile: string
-  password: string
-}
-// fix: Property 'proxy' does not exist on type 'ComponentInternalInstance | null'
-// 1、在页面或组件中，CurrentInstance一定存在，因此可以使用!强制标记存在
-// 2、使用as强转 getCurrentInstance() as ComponentInternalInstance
-const { proxy } = getCurrentInstance()!
+
 const router = useRouter()
 const { t } = useI18n()
-const activeName = ref('login')
-const loginText = ref(t('login.loginBtn'))
-const ruleFormRef = ref()
-
-const ruleForm: IRuleFrom = reactive({
-  mobile: '',
-  password: ''
-})
-
-const rules = reactive({
-  mobile: [
-    {
-      required: true,
-      min: 11,
-      max: 11,
-      message: t('login.placeMobile'),
-      trigger: 'blur'
-    }
-  ],
-  password: [
-    {
-      required: true,
-      message: t('login.placePass'),
-      trigger: 'blur'
-    }
-  ]
-})
+const { ruleForm, loginText, ruleFormRef, activeName, rules } =
+  useFormProperties(t)
+const { userSign, userLogin } = useFormOperates(router, ruleForm)
 
 const handleTabClick = (e: any) => {
   console.log('🚀【切换tab】', e)
@@ -54,42 +22,10 @@ const submitForm = () => {
     if (valid) {
       console.log('🚀【表单校验成功可以进行提交】')
       if (activeName.value === 'sign') {
-        handleUserSign(ruleForm)
+        userSign(ruleForm)
       } else if (activeName.value === 'login') {
-        handleUserLogin(ruleForm)
+        userLogin(ruleForm)
       }
-    }
-  })
-}
-
-// 注册接口
-const handleUserSign = (params: any) => {
-  userSignApi(params).then((res: IResultOr) => {
-    const { success, message } = res
-    if (success) {
-      // 成功
-      console.log('🚀【注册成功】')
-      proxy?.$message.success(message)
-    } else {
-      proxy?.$message.error(message)
-    }
-  })
-}
-
-// 登录接口
-const handleUserLogin = (params: IRuleFrom) => {
-  userLoginApi(params).then((res: IResultOr) => {
-    const { success, message, result } = res
-    const { status } = result
-    if (success) {
-      // 成功
-      console.log('🚀【登录成功】')
-      // proxy?.$message.success(message)
-      // 存储登录态
-      window.localStorage.setItem('userStatus', status)
-      router.push({ path: '/home' })
-    } else {
-      proxy?.$message.error(message)
     }
   })
 }
