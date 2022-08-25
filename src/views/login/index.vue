@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive, ref, getCurrentInstance } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { userSignApi, userLoginApi } from '../../api/login'
+import { IResultOr } from '../../api/interface'
 interface IRuleFrom {
   mobile: string
   password: string
 }
+// fix: Property 'proxy' does not exist on type 'ComponentInternalInstance | null'
+// 1、在页面或组件中，CurrentInstance一定存在，因此可以使用!强制标记存在
+// 2、使用as强转 getCurrentInstance() as ComponentInternalInstance
+const { proxy } = getCurrentInstance()!
 const router = useRouter()
-const route = useRoute()
 const { t } = useI18n()
 const activeName = ref('login')
 const loginText = ref(t('login.loginBtn'))
@@ -30,7 +35,7 @@ const rules = reactive({
   ],
   password: [
     {
-      require: true,
+      required: true,
       message: t('login.placePass'),
       trigger: 'blur'
     }
@@ -48,6 +53,43 @@ const submitForm = () => {
   ruleFormRef.value.validate((valid: any) => {
     if (valid) {
       console.log('🚀【表单校验成功可以进行提交】')
+      if (activeName.value === 'sign') {
+        handleUserSign(ruleForm)
+      } else if (activeName.value === 'login') {
+        handleUserLogin(ruleForm)
+      }
+    }
+  })
+}
+
+// 注册接口
+const handleUserSign = (params: any) => {
+  userSignApi(params).then((res: IResultOr) => {
+    const { success, message } = res
+    if (success) {
+      // 成功
+      console.log('🚀【注册成功】')
+      proxy?.$message.success(message)
+    } else {
+      proxy?.$message.error(message)
+    }
+  })
+}
+
+// 登录接口
+const handleUserLogin = (params: IRuleFrom) => {
+  userLoginApi(params).then((res: IResultOr) => {
+    const { success, message, result } = res
+    const { status } = result
+    if (success) {
+      // 成功
+      console.log('🚀【登录成功】')
+      // proxy?.$message.success(message)
+      // 存储登录态
+      window.localStorage.setItem('userStatus', status)
+      router.push({ path: '/home' })
+    } else {
+      proxy?.$message.error(message)
     }
   })
 }

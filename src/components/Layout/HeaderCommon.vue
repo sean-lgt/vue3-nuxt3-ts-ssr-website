@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { ref, defineEmits } from 'vue'
+import { ref, defineEmits, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import en from 'element-plus/lib/locale/lang/en'
 import { saveLanguageApi, fetchLanguageApi } from '../../api/layout/index'
+import { userLogoutApi } from '../../api/login/index'
 
+import { IResultOr } from '@/api/interface'
+
+// fix: Property 'proxy' does not exist on type 'ComponentInternalInstance | null'
+const { proxy } = getCurrentInstance()!
 const router = useRouter()
 const { t } = useI18n()
 const activeIndex = ref('1')
@@ -21,9 +26,29 @@ const handleSelect = (e: any) => {
     saveLanguage(en) // 调用接口保存
   } else if (e === 'login') {
     router.push({ name: 'login' })
+  } else if (e === 'logout') {
+    handleLogout()
   }
   console.log('🚀【点击el-menu】', e)
 }
+
+// mock接口，退出登录
+const handleLogout = () => {
+  userLogoutApi().then((res: IResultOr) => {
+    const { success, message } = res
+    if (success) {
+      // 成功
+      console.log('🚀【退出成功】')
+      // proxy?.$message.success(message)
+      // 存储登录态
+      window.localStorage.setItem('userStatus', '0')
+      router.push({ path: '/login' })
+    } else {
+      proxy?.$message.error(message)
+    }
+  })
+}
+
 // mock接口，保存当前语言包
 const saveLanguage = (language: any) => {
   saveLanguageApi(language).then((res) => {
@@ -40,15 +65,20 @@ const getCurrentLanguage = () => {
     const { name } = result || {}
     if (success) {
       console.log('🚀【查询当前语言包成功】', result)
-      if (name.name === 'zh') {
+      if (!result) {
         emit('changeLang', zhCn)
-      } else if (name.name === 'en') {
-        emit('changeLang', en)
+      } else {
+        if (name.name === 'zh') {
+          emit('changeLang', zhCn)
+        } else if (name.name === 'en') {
+          emit('changeLang', en)
+        }
       }
     }
   })
 }
 getCurrentLanguage()
+const userStatus = window.localStorage.getItem('userStatus') || 0
 </script>
 <template>
   <div class="header-common">
@@ -66,16 +96,18 @@ getCurrentLanguage()
         <el-menu-item index="zh">中文</el-menu-item>
         <el-menu-item index="en">English</el-menu-item>
       </el-sub-menu>
-      <el-menu-item index="avatar">
-        <img
-          src="../../assets/images/layout/avatar.jpg"
-          alt="user-center"
-          class="avatar"
-        />
+      <el-sub-menu index="avatar" v-if="userStatus == 1">
+        <template #title>
+          <img
+            src="../../assets/images/layout/avatar.jpg"
+            alt="user-center"
+            class="avatar"
+        /></template>
+        <el-menu-item index="logout">{{ t('login.logout') }}</el-menu-item>
+      </el-sub-menu>
+      <el-menu-item index="login" v-else>
+        {{ t('login.loginTab') }}/{{ t('login.signTab') }}
       </el-menu-item>
-      <el-menu-item index="login"
-        >{{ t('login.loginTab') }}/{{ t('login.signTab') }}</el-menu-item
-      >
     </el-menu>
   </div>
 </template>

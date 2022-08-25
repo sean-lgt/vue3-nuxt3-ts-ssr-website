@@ -8,7 +8,8 @@ export default {
     // 头部组件
     orders: '房源订单中心',
     records: '历史足迹',
-    language: '语言'
+    language: '语言',
+    logout: '退出'
   },
   footer: {
     // 底部组件

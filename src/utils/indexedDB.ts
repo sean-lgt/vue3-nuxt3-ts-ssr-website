@@ -1,7 +1,4 @@
 // 打开数据库
-
-import userObjectStore from '../db/objectStores/user'
-
 export default class DB {
   private dbName: string // 数据库名称
   private db: any // 数据库对象
@@ -18,7 +15,7 @@ export default class DB {
   public openStore(stores: any) {
     console.log('🚀【拿到的stores】', stores)
     // 数据库名、版本号
-    const request = window.indexedDB.open(this.dbName, 2)
+    const request = window.indexedDB.open(this.dbName, 4)
     return new Promise((resolve, reject) => {
       request.onsuccess = (event: any) => {
         // 数据库打开成功
