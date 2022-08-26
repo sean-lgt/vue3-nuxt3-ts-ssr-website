@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineEmits, getCurrentInstance } from 'vue'
+import { ref, getCurrentInstance, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'vuex'
@@ -19,7 +19,7 @@ const router = useRouter()
 const { t, locale } = useI18n()
 const activeIndex = ref('records')
 // changeLang
-const emit = defineEmits<{ (e: 'changeLang', language: any): void }>()
+// const emit = defineEmits<{ (e: 'changeLang', language: any): void }>()
 const handleSelect = (e: any) => {
   if (e === 'zh') {
     // saveLanguage(zhCn)
@@ -85,7 +85,11 @@ const getCurrentLanguage = () => {
     }
   })
 }
-getCurrentLanguage()
+onMounted(() => {
+  // fix:vite ssr window is not defined
+  getCurrentLanguage()
+})
+// getCurrentLanguage()
 // const userStatus = window.localStorage.getItem('userStatus') || 0
 </script>
 <template>

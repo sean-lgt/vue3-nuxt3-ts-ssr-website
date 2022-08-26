@@ -9,6 +9,6 @@ export async function render(url: string) {
   const { app, router } = createApp()
   await router.push(url) // 当前路由地址
   await router.isReady()
-  const html = renderToString(app)
+  const html = await renderToString(app)
   return html
 }
