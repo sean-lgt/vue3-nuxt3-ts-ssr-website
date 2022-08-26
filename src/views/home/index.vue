@@ -3,6 +3,7 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useStore } from 'vuex'
 // import IndexedDB from '../../utils/indexedDB'
 // import { getElephant } from '../../api/index'
 const router = useRouter()
@@ -45,16 +46,27 @@ const { t } = useI18n()
 //   console.log('🚀【mock请求获取到的数据】', result)
 // }
 // fetchAllList()
+const store = useStore()
+const handleSetMutation = () => {
+  store.commit('setCount', 2)
+  console.log('此时count值', store.state.count)
+}
+const handleSetAction = () => {
+  store.dispatch('fetchCount', 10)
+}
 </script>
 
 <template>
   <div>
     {{ t('message.home') }}
-    <el-button @click="addDB">增加数据</el-button>
+    {{ store.state.count }}
+    <!-- <el-button @click="addDB">增加数据</el-button>
     <el-button @click="updateDB">修改数据</el-button>
     <el-button @click="deleteDB">删除数据</el-button>
     <el-button @click="getAllList">查询所有数据</el-button>
-    <el-button @click="getItem">查询某一条数据</el-button>
+    <el-button @click="getItem">查询某一条数据</el-button> -->
+    <el-button @click="handleSetMutation">mutation</el-button>
+    <el-button @click="handleSetAction">action</el-button>
     <div class="text">
       Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt placeat
       iure iusto, itaque dolor perferendis veniam, eaque cumque quae
