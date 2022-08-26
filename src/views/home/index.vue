@@ -4,6 +4,7 @@
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'vuex'
+import { key as storeKey } from '@/store'
 // import IndexedDB from '../../utils/indexedDB'
 // import { getElephant } from '../../api/index'
 const router = useRouter()
@@ -46,7 +47,7 @@ const { t } = useI18n()
 //   console.log('🚀【mock请求获取到的数据】', result)
 // }
 // fetchAllList()
-const store = useStore()
+const store = useStore(storeKey)
 const handleSetMutation = () => {
   store.commit('setCount', 2)
   console.log('此时count值', store.state.count)

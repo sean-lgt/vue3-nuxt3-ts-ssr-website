@@ -3,6 +3,7 @@ import { ref, defineEmits, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'vuex'
+import { key as storeKey } from '@/store'
 
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import en from 'element-plus/lib/locale/lang/en'
@@ -13,7 +14,7 @@ import { IResultOr } from '@/api/interface'
 
 // fix: Property 'proxy' does not exist on type 'ComponentInternalInstance | null'
 const { proxy } = getCurrentInstance()!
-const store = useStore()
+const store = useStore(storeKey)
 const router = useRouter()
 const { t, locale } = useI18n()
 const activeIndex = ref('records')

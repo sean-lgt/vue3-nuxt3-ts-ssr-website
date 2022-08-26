@@ -10,10 +10,11 @@ import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import en from 'element-plus/lib/locale/lang/en'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
+import { key as storeKey } from '@/store'
 // import { getRoomList } from './api/index'
 
 const route = useRoute()
-const store = useStore()
+const store = useStore(storeKey)
 // console.log('🚀【import.meta.env】', import.meta.env)
 // const fetchList = async () => {
 //   const result = await getRoomList()

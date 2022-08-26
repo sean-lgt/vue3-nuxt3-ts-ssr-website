@@ -1,6 +1,8 @@
 import { getCurrentInstance } from 'vue'
 import { Router, useRoute } from 'vue-router'
-import { useStore } from 'vuex'
+// import { useStore } from 'vuex'
+// import { key as storeKey } from '@/store'
+import { useStore } from '@/store'
 import { IResultOr } from '@/api/interface'
 import { userSignApi, userLoginApi } from '@/api/login'
 

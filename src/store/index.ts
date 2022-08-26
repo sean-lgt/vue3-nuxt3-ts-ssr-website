@@ -1,8 +1,24 @@
-import { createStore } from 'vuex'
+import { InjectionKey } from 'vue'
+import { createStore, Store, useStore as originUseStore } from 'vuex'
 import { saveLanguageApi } from '../api/layout'
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
-import { stat } from 'fs'
-export const store = createStore({
+
+// 为 store state 声明类型
+export interface IAllStateTypes {
+  count: number
+  locale: any
+  userStatus: number
+}
+
+// 定义 injection key
+export const key: InjectionKey<Store<IAllStateTypes>> = Symbol('allStoreKey')
+
+// 暴露一个使用key的useStore,可以直接导入使用，无需再传key
+export const useStore = () => {
+  return originUseStore(key)
+}
+
+export const store = createStore<IAllStateTypes>({
   state: {
     count: 1,
     locale: zhCn, // 当前语言
