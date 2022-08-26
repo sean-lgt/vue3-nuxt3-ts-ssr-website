@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory, createMemoryHistory } from 'vue-router'
 import home from '@/views/home/index.vue'
 import mine from '@/views/mine/index.vue'
 import login from '@/views/login/index.vue'
@@ -35,7 +35,7 @@ const routes = [
 
 // 创建路由
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(),
   routes
 })
 
