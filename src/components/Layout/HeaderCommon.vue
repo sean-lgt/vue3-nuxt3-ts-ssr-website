@@ -2,6 +2,7 @@
 import { ref, defineEmits, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useStore } from 'vuex'
 
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import en from 'element-plus/lib/locale/lang/en'
@@ -12,18 +13,23 @@ import { IResultOr } from '@/api/interface'
 
 // fix: Property 'proxy' does not exist on type 'ComponentInternalInstance | null'
 const { proxy } = getCurrentInstance()!
+const store = useStore()
 const router = useRouter()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const activeIndex = ref('records')
 // changeLang
 const emit = defineEmits<{ (e: 'changeLang', language: any): void }>()
 const handleSelect = (e: any) => {
   if (e === 'zh') {
-    emit('changeLang', zhCn)
-    saveLanguage(zhCn)
+    // saveLanguage(zhCn)
+    store.dispatch('saveLanguage', zhCn)
+    // emit('changeLang', zhCn)
+    locale.value = e
   } else if (e === 'en') {
-    emit('changeLang', en)
-    saveLanguage(en) // 调用接口保存
+    // saveLanguage(en) // 调用接口保存
+    store.dispatch('saveLanguage', en)
+    // emit('changeLang', en)
+    locale.value = e
   } else if (e === 'login') {
     router.push({ name: 'login' })
   } else if (e === 'logout') {
@@ -41,7 +47,8 @@ const handleLogout = () => {
       console.log('🚀【退出成功】')
       // proxy?.$message.success(message)
       // 存储登录态
-      window.localStorage.setItem('userStatus', '0')
+      // window.localStorage.setItem('userStatus', '0')
+      store.commit('setUserStatus', 0)
       router.push({ path: '/login' })
     } else {
       proxy?.$message.error(message)
@@ -50,14 +57,14 @@ const handleLogout = () => {
 }
 
 // mock接口，保存当前语言包
-const saveLanguage = (language: any) => {
-  saveLanguageApi(language).then((res) => {
-    const { success } = res
-    if (success) {
-      console.log('🚀【保存当前语言包成功】', success)
-    }
-  })
-}
+// const saveLanguage = (language: any) => {
+//   saveLanguageApi(language).then((res) => {
+//     const { success } = res
+//     if (success) {
+//       console.log('🚀【保存当前语言包成功】', success)
+//     }
+//   })
+// }
 // mock接口 获取当前语言包
 const getCurrentLanguage = () => {
   fetchLanguageApi().then((res) => {
@@ -78,7 +85,7 @@ const getCurrentLanguage = () => {
   })
 }
 getCurrentLanguage()
-const userStatus = window.localStorage.getItem('userStatus') || 0
+// const userStatus = window.localStorage.getItem('userStatus') || 0
 </script>
 <template>
   <div class="header-common">
@@ -96,7 +103,7 @@ const userStatus = window.localStorage.getItem('userStatus') || 0
         <el-menu-item index="zh">中文</el-menu-item>
         <el-menu-item index="en">English</el-menu-item>
       </el-sub-menu>
-      <el-sub-menu index="avatar" v-if="userStatus == 1">
+      <el-sub-menu index="avatar" v-if="store.state.userStatus == 1">
         <template #title>
           <img
             src="../../assets/images/layout/avatar.jpg"
@@ -105,7 +112,7 @@ const userStatus = window.localStorage.getItem('userStatus') || 0
         /></template>
         <el-menu-item index="logout">{{ t('login.logout') }}</el-menu-item>
       </el-sub-menu>
-      <el-menu-item index="login" v-if="userStatus != 1">
+      <el-menu-item index="login" v-if="store.state.userStatus != 1">
         {{ t('login.loginTab') }}/{{ t('login.signTab') }}
       </el-menu-item>
     </el-menu>

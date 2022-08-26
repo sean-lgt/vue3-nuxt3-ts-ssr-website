@@ -1,5 +1,6 @@
 import { getCurrentInstance } from 'vue'
 import { Router, useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import { IResultOr } from '@/api/interface'
 import { userSignApi, userLoginApi } from '@/api/login'
 
@@ -22,6 +23,7 @@ export default function useFormOperates(
   // 2、使用as强转 getCurrentInstance() as ComponentInternalInstance
   const { proxy }: any = getCurrentInstance()
   // const route = useRoute()
+  const store = useStore()
 
   function userSign(): void {
     userSignApi(params).then((res: IResultOr) => {
@@ -46,7 +48,8 @@ export default function useFormOperates(
         console.log('🚀【登录成功】')
         // proxy?.$message.success(message)
         // 存储登录态
-        window.localStorage.setItem('userStatus', status)
+        // window.localStorage.setItem('userStatus', status)
+        store.commit('setUserStatus', status)
         router.push({ path: '/home' })
       } else {
         proxy?.$message.error(message)

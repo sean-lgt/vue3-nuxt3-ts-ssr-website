@@ -9,9 +9,11 @@ import { useI18n } from 'vue-i18n'
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import en from 'element-plus/lib/locale/lang/en'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 // import { getRoomList } from './api/index'
 
 const route = useRoute()
+const store = useStore()
 // console.log('🚀【import.meta.env】', import.meta.env)
 // const fetchList = async () => {
 //   const result = await getRoomList()
@@ -30,10 +32,11 @@ const changeLang = (lang: any) => {
 
   console.log('🚀【lang】', locale.value)
 }
+console.log('🚀【12121-12312】', store.state.locale)
 </script>
 
 <template>
-  <el-config-provider :locale="localeLanguage">
+  <el-config-provider :locale="store.state.locale">
     <!-- 头部 -->
     <header-common
       @changeLang="changeLang"
