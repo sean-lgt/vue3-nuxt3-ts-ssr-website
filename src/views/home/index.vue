@@ -1,8 +1,15 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useStore } from '@/store'
 
 export default defineComponent({
-  // setup() {},
+  setup() {
+    const store = useStore()
+
+    return {
+      store
+    }
+  },
   asyncData({ store, route }: any) {
     console.log('🚀【store数据】', store)
     console.log('🚀【route数据】', route)
@@ -20,10 +27,14 @@ export default defineComponent({
       <h2 class="title">主标题</h2>
       <p class="sub-title">副标题</p>
       <div class="home-list">
-        <div class="item" v-for="i in 6" :key="i">
-          <img src="../../assets/images/login/bg.png" alt="" />
-          <p class="titke">房屋标题</p>
-          <p class="price">134</p>
+        <div
+          class="item"
+          v-for="(item, index) in store.state.roomList"
+          :key="index"
+        >
+          <img :src="item.pictureUrl" :alt="item.title" />
+          <p class="titke">{{ item.title }}</p>
+          <p class="price">￥{{ item.price }}元</p>
         </div>
       </div>
     </div>

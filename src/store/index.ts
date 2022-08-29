@@ -73,13 +73,16 @@ export const createSSRStore = () => {
       },
       // 获取房屋列表
       fetchRoomList({ commit }) {
-        getRoomList().then((res: any) => {
-          const { success, result } = res
-          const orders = result.orders
-          if (success) {
-            console.log('🚀【拿到数据】', orders)
-            commit('setRoomList', orders)
-          }
+        return new Promise((resolve) => {
+          getRoomList().then((res: any) => {
+            const { success, result } = res
+            const orders = result.orders
+            if (success) {
+              console.log('🚀【拿到数据】', orders)
+              commit('setRoomList', orders.data)
+              resolve(true)
+            }
+          })
         })
       }
     }

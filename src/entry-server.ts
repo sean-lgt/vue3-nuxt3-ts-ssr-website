@@ -28,6 +28,7 @@ export async function render(url: string) {
     })
   )
 
-  const html = await renderToString(app)
-  return html
+  const appHtml = await renderToString(app)
+  const state = store.state
+  return { appHtml, state }
 }
