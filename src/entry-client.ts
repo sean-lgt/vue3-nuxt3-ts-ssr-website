@@ -25,6 +25,42 @@ router.beforeEach((to, from, next) => {
 
 router.isReady().then(() => {
   // 所有路由都加载完毕后挂载
+  // 通过全局的路由守卫
+  router.beforeResolve((to, from, next) => {
+    // 对所有匹配的路由组件调用 asyncData
+    const toComponents = router
+      .resolve(to)
+      .matched.flatMap((record: any) => Object.values(record.components)) // 路由去的地址
+    const fromComponents = router
+      .resolve(from)
+      .matched.flatMap((record: any) => Object.values(record.components)) // 路由过来的地址
+    // 看路由匹配是否一致
+    const actived = toComponents.filter((c, i) => {
+      return fromComponents[i] !== c
+    })
+    console.log('🚀【是否需要进行服务端预处理】', actived)
+
+    if (!actived.length) {
+      return next() // 属于路由跳转的,直接跳转路由
+    } else {
+      next()
+    }
+    console.log('🚀【start----loading】')
+    Promise.all(
+      actived.map((Component: any) => {
+        if (Component.asyncData) {
+          return Component.asyncData({
+            store,
+            route: router.currentRoute
+          })
+        }
+      })
+    ).then(() => {
+      // next()
+      console.log('🚀【end----loading】')
+    })
+  })
+
   // 挂载完成后将由客户端接管操作
   app.mount('#app')
 })

@@ -53,6 +53,7 @@ export default function useFormOperates(
         // window.localStorage.setItem('userStatus', status)
         store.commit('setUserStatus', status)
         router.push({ path: '/home' })
+        // window.location.href = '/home' // 刷新当前页面
       } else {
         proxy?.$message.error(message)
       }
