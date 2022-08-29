@@ -1,8 +1,12 @@
 import { http } from '../utils/http'
 import IndexDB from '../utils/indexedDB'
 const airbnbDB = new IndexDB('airbnb')
+
 export const getRoomList = (params = {}) => {
-  return http.httpRequestGet('http://127.0.0.1:3008/common/getList', params)
+  return http.httpRequestGet(
+    'http://110.42.184.111/api/room/room/getRoomList?pageNo=1&pageSize=10',
+    params
+  )
 }
 
 // Mock接口

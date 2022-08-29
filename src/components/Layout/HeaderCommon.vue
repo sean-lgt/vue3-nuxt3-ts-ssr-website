@@ -19,7 +19,7 @@ const router = useRouter()
 const { t, locale } = useI18n()
 const activeIndex = ref('records')
 // changeLang
-// const emit = defineEmits<{ (e: 'changeLang', language: any): void }>()
+const emit = defineEmits<{ (e: 'changeLang', language: any): void }>()
 const handleSelect = (e: any) => {
   if (e === 'zh') {
     // saveLanguage(zhCn)

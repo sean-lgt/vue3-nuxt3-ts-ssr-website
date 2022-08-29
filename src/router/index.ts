@@ -39,4 +39,15 @@ const router = createRouter({
   routes
 })
 
+/**
+ * @description: 创建一个新的路由实例
+ * @return {*}
+ */
+export const createSSRRouter = () => {
+  return createRouter({
+    history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(),
+    routes
+  })
+}
+
 export default router

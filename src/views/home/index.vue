@@ -1,60 +1,14 @@
-<script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import { useRouter, useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
-import { useStore } from 'vuex'
-import { key as storeKey } from '@/store'
-// import IndexedDB from '../../utils/indexedDB'
-// import { getElephant } from '../../api/index'
-const router = useRouter()
-const route = useRoute()
-console.log('🚀【route】', route.params)
-console.log('🚀【i18n】', useI18n)
-const { t } = useI18n()
-// 数据库indexedDB
-// const airbnbDB = new IndexedDB('airbnb')
-// 打开数据库
-// airbnbDB.openStore('room', 'id')
-// airbnbDB.openStore('elephant', 'id', ['nose', 'ear'])
-// // 增加/修改
-// const addDB = () => {
-//   airbnbDB.updateItem('elephant', {
-//     nose: '3333m',
-//     ear: '比较大'
-//   })
-// }
-// const updateDB = () => {
-//   airbnbDB.updateItem('elephant', {
-//     nose: '3333m',
-//     ear: '比较大',
-//     id: 3
-//   })
-// }
-// const deleteDB = () => {
-//   airbnbDB.deleteItem('elephant', 4)
-// }
-// const getAllList = () => {
-//   airbnbDB.getList('elephant')
-// }
-// const getItem = () => {
-//   airbnbDB.getItem('elephant', 3)
-// }
+<script lang="ts">
+import { defineComponent } from 'vue'
 
-// 自建mock接口
-// const fetchAllList = async () => {
-//   const result = await getElephant()
-//   console.log('🚀【mock请求获取到的数据】', result)
-// }
-// fetchAllList()
-const store = useStore(storeKey)
-const handleSetMutation = () => {
-  store.commit('setCount', 2)
-  console.log('此时count值', store.state.count)
-}
-const handleSetAction = () => {
-  store.dispatch('fetchCount', 10)
-}
+export default defineComponent({
+  // setup() {},
+  asyncData({ store, route }: any) {
+    console.log('🚀【store数据】', store)
+    console.log('🚀【route数据】', route)
+    return store.dispatch('fetchRoomList')
+  }
+})
 </script>
 
 <template>

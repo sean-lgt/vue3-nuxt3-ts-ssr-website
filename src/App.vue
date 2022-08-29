@@ -31,9 +31,9 @@ const changeLang = (lang: any) => {
   localeLanguage.value = lang
   locale.value = lang.name
 
-  console.log('🚀【lang】', locale.value)
+  // console.log('🚀【lang】', locale.value)
 }
-console.log('🚀【12121-12312】', store.state.locale)
+// console.log('🚀【12121-12312】', store.state.locale)
 </script>
 
 <template>
