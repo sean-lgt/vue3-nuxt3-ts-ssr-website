@@ -58,41 +58,24 @@ const handleSetAction = () => {
 </script>
 
 <template>
-  <div>
-    {{ t('message.home') }}
-    {{ store.state.count }}
-    <!-- <el-button @click="addDB">增加数据</el-button>
-    <el-button @click="updateDB">修改数据</el-button>
-    <el-button @click="deleteDB">删除数据</el-button>
-    <el-button @click="getAllList">查询所有数据</el-button>
-    <el-button @click="getItem">查询某一条数据</el-button> -->
-    <el-button @click="handleSetMutation">mutation</el-button>
-    <el-button @click="handleSetAction">action</el-button>
-    <div class="text">
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt placeat
-      iure iusto, itaque dolor perferendis veniam, eaque cumque quae
-      exercitationem in quis natus aliquam eos, consequatur sunt quos neque
-      dolore?
+  <div class="home-page">
+    <!-- banner -->
+    <div class="banner"></div>
+    <!-- 房屋列表 -->
+    <div class="main-wrapper">
+      <h2 class="title">主标题</h2>
+      <p class="sub-title">副标题</p>
+      <div class="home-list">
+        <div class="item" v-for="i in 6" :key="i">
+          <img src="../../assets/images/login/bg.png" alt="" />
+          <p class="titke">房屋标题</p>
+          <p class="price">134</p>
+        </div>
+      </div>
     </div>
-    <button @click="() => router.push({ path: '/mine', query: { id: 1 } })">
-      跳转到个人中心
-    </button>
   </div>
 </template>
 
 <style lang="scss" scoped>
 @import '@/assets/scss/home/index.scss';
-</style>
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>

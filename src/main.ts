@@ -1,6 +1,7 @@
 import { createSSRApp } from 'vue'
 import router from './router'
 // import './style.css'
+import 'normalize.css/normalize.css' // 重置 css 样式
 // import { ElMessage } from 'element-plus' //服务端渲染不支持按需引入的方式，需要注释掉 vite.config.ts 中的配置
 import ElementPlus, { ElMessage, ID_INJECTION_KEY } from 'element-plus'
 import 'element-plus/dist/index.css' // 全局引入element-plus 样式

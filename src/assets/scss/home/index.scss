@@ -1,8 +1,47 @@
-button{
-  color: $red;
-}
-
-.text{
-  width: 200px;
-  @include line-text-overflow
+.home-page{
+  .banner{
+    height: 530px;
+    width: 100%;
+    background: url(../../images/home/banner.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  .title{
+    font-size: 22px;
+  }
+  .sub-title{
+    margin: 5px 0 25px 0;
+    font-size: 16px;
+  }
+  .main-wrapper{
+    @include main-wrapper()
+  }
+  .home-list{
+    @include flex-layout(row,flex-start,center);
+    .item{
+      width: 333px;
+      overflow: hidden;
+      display: inline-block;
+      margin: 0 8px 25px 8px;
+      cursor: pointer;
+      img{
+        width: 333px;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+      .title{
+        width: 333px;
+        font-size: 18px;
+        margin: 15px 0px;
+        font-weight: bold;
+        text-align: left;
+        @include text-overflow(1)
+      }
+      .price{
+        font-size: 16px;
+        text-align: left;
+      }
+    }
+  }
 }

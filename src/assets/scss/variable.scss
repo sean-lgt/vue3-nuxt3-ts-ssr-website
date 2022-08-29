@@ -21,3 +21,11 @@ $orange:rgba(255, 81, 0, 0.842);
   align-items: $align;
   flex-wrap: wrap;
 }
+
+// 多行文本超过行数显示省略号
+@mixin  text-overflow($line:1){
+  display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: $line;
+	overflow: hidden;
+}
