@@ -10,3 +10,8 @@ body{
 .main-container{
   min-height: calc(100vh - 402px);
 }
+
+.el-pagination{
+  text-align: center;
+  margin: 20px auto;
+}

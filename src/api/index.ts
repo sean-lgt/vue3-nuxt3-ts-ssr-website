@@ -1,10 +1,11 @@
 import { http } from '../utils/http'
 import IndexDB from '../utils/indexedDB'
+import { IResultOr, IRoomlistParams } from './interface'
 const airbnbDB = new IndexDB('airbnb')
 
-export const getRoomList = (params = {}) => {
+export const getRoomList = (params: IRoomlistParams): Promise<IResultOr> => {
   return http.httpRequestGet(
-    'http://110.42.184.111/api/room/room/getRoomList?pageNo=1&pageSize=10',
+    'http://110.42.184.111/api/room/room/getRoomList',
     params
   )
 }

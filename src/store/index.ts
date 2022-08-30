@@ -3,7 +3,7 @@ import { createStore, Store, useStore as originUseStore } from 'vuex'
 import { saveLanguageApi } from '../api/layout'
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import { getRoomList } from '@/api/index'
-import { stat } from 'fs'
+import { IRoomlistParams } from '@/api/interface'
 
 // 为 store state 声明类型
 export interface IAllStateTypes {
@@ -11,6 +11,10 @@ export interface IAllStateTypes {
   locale: any
   userStatus: number
   roomList: Array<any>
+  pageNo: number
+  pageSize: number
+  total: number
+  cityCode: string
 }
 
 // 定义 injection key
@@ -32,7 +36,11 @@ export const createSSRStore = () => {
       count: 1,
       locale: zhCn, // 当前语言
       userStatus: 0, // 登录态
-      roomList: [] // 房屋列表
+      roomList: [], // 房屋列表
+      pageNo: 1, // 页数
+      pageSize: 6, // 每页个数
+      total: 0, // 总数
+      cityCode: 'hz' // 城市编码
     },
     mutations: {
       setCount(state, payload) {
@@ -53,6 +61,14 @@ export const createSSRStore = () => {
       setRoomList(state, payload) {
         state.roomList = payload
         return state.roomList
+      },
+      setPageNo(state, payload) {
+        state.pageNo = payload
+        return state.pageNo
+      },
+      setTotal(state, payload) {
+        state.total = payload
+        return state.total
       }
     },
     actions: {
@@ -72,14 +88,23 @@ export const createSSRStore = () => {
         })
       },
       // 获取房屋列表
-      fetchRoomList({ commit }) {
+      fetchRoomList({ commit, state }, payload: IRoomlistParams) {
+        const { pageNo, cityCode = state.cityCode } = payload
+        commit('setPageNo', pageNo) // 更改页码
+        const queryParams = {
+          pageNo,
+          pageSize: state.pageSize,
+          cityCode
+        }
         return new Promise((resolve) => {
-          getRoomList().then((res: any) => {
+          getRoomList(queryParams).then((res) => {
             const { success, result } = res
             const orders = result.orders
+            const total = result.total
             if (success) {
               console.log('🚀【拿到数据】', orders)
               commit('setRoomList', orders.data)
+              commit('setTotal', total)
               resolve(true)
             }
           })
