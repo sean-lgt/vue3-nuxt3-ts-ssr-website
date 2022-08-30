@@ -1,7 +1,12 @@
 import { createRouter, createWebHistory, createMemoryHistory } from 'vue-router'
-import home from '@/views/home/index.vue'
-import mine from '@/views/mine/index.vue'
-import login from '@/views/login/index.vue'
+// import home from '@/views/home/index.vue'
+// import mine from '@/views/mine/index.vue'
+// import login from '@/views/login/index.vue'
+
+// 使用路由懒加载
+const home = () => import('@/views/home/index.vue')
+const mine = () => import('@/views/mine/index.vue')
+const login = () => import('@/views/login/index.vue')
 
 const routes = [
   {
