@@ -1,0 +1,60 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useStore } from '@/store'
+import { IRoomlistParams } from '@/api/interface'
+
+const store = useStore()
+const cityCode = ref(store.state.cityCode)
+const cityArr = [
+  {
+    cityCode: 'hz',
+    cityName: '杭州'
+  },
+  {
+    cityCode: 'sh',
+    cityName: '上海'
+  },
+  {
+    cityCode: 'nj',
+    cityName: '南京'
+  },
+  {
+    cityCode: 'cd',
+    cityName: '成都'
+  },
+  {
+    cityCode: 'cq',
+    cityName: '重庆'
+  },
+  {
+    cityCode: 'bj',
+    cityName: '北京'
+  },
+  {
+    cityCode: 'sz',
+    cityName: '苏州'
+  }
+]
+
+const cityClick = (tab: any) => {
+  const { name } = tab.props
+  cityCode.value = name
+  store.dispatch('fetchRoomList', {
+    pageNo: 1,
+    cityCode: name
+  } as IRoomlistParams)
+}
+</script>
+<template>
+  <!-- 城市筛选 -->
+  <el-tabs v-model="cityCode" @tab-click="cityClick" type="card">
+    <el-tab-pane
+      v-for="(item, index) in cityArr"
+      :key="index"
+      :label="item.cityName"
+      :name="item.cityCode"
+    ></el-tab-pane>
+  </el-tabs>
+</template>
+
+<style scoped></style>

@@ -2,6 +2,7 @@
 import { useStore } from '@/store'
 // 引入组件
 import Pagination from '@/components/common/Pagination.vue'
+import HomeTabs from './HomeTabs.vue'
 import { IRoomlistParams } from '@/api/interface'
 
 const store = useStore()
@@ -14,6 +15,8 @@ const changePage = (pageNo: number) => {
 </script>
 
 <template>
+  <!-- tab栏 -->
+  <HomeTabs></HomeTabs>
   <!-- 列表数据 -->
   <div>
     <div class="home-list">
