@@ -1,16 +1,22 @@
 <script setup lang="ts">
 import { useStore } from '@/store'
+import { useRouter } from 'vue-router'
 // 引入组件
 import Pagination from '@/components/common/Pagination.vue'
 import HomeTabs from './HomeTabs.vue'
 import { IRoomlistParams } from '@/api/interface'
 
 const store = useStore()
-
+const router = useRouter()
 // 监听子组件页码改变
 const changePage = (pageNo: number) => {
   console.log('🚀【父组件-pageNo】', pageNo)
   store.dispatch('fetchRoomList', { pageNo } as IRoomlistParams)
+}
+// 点击查看详情
+const clickDetail = (detailItem: any) => {
+  console.log('🚀【点击跳转详情】', detailItem)
+  router.push({ path: `/roomDetail/${detailItem.id}` })
 }
 </script>
 
@@ -24,6 +30,7 @@ const changePage = (pageNo: number) => {
         class="item"
         v-for="(item, index) in store.state.roomList"
         :key="index"
+        @click="clickDetail(item)"
       >
         <img :src="item.pictureUrl" :alt="item.title" />
         <p class="titke">{{ item.title }}</p>

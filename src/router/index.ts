@@ -7,6 +7,7 @@ import { createRouter, createWebHistory, createMemoryHistory } from 'vue-router'
 const home = () => import('@/views/home/index.vue')
 const mine = () => import('@/views/mine/index.vue')
 const login = () => import('@/views/login/index.vue')
+const roomDetail = () => import('@/views/detail/index.vue')
 
 const routes = [
   {
@@ -33,6 +34,15 @@ const routes = [
     component: login,
     meta: {
       title: '登录',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/roomDetail/:id',
+    name: 'roomDetail',
+    component: roomDetail,
+    meta: {
+      title: '房屋详情',
       keepAlive: false
     }
   }
