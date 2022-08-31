@@ -12,3 +12,7 @@ export interface IRoomlistParams extends AxiosRequestConfig {
   pageSize?: number
   cityCode?: string
 }
+
+export interface IRoomDetailParams extends AxiosRequestConfig {
+  id: number
+}
