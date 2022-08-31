@@ -11,11 +11,15 @@ export default defineComponent({
   setup() {
     const store = useStore()
   },
+  // asyncData 属于自己定义的钩子函数，在里面只能 取store、route
   asyncData({ store, route }: any) {
     console.log('🚀【asyncData --- 详情页】', store)
-    // const { pageNo } = store.state
+    console.log('🚀【钩子路由---】', route)
+
+    const { roomId } = store.state
+    const { id } = route.value.params
     return store.dispatch('fetchRoomDetail', {
-      id: 1
+      id: roomId || id
     } as IRoomDetailParams)
   }
 })

@@ -16,6 +16,7 @@ const changePage = (pageNo: number) => {
 // 点击查看详情
 const clickDetail = (detailItem: any) => {
   console.log('🚀【点击跳转详情】', detailItem)
+  store.commit('setRoomId', detailItem.id)
   router.push({ path: `/roomDetail/${detailItem.id}` })
 }
 </script>

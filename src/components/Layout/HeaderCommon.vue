@@ -89,12 +89,21 @@ onMounted(() => {
   // fix:vite ssr window is not defined
   getCurrentLanguage()
 })
+
+const clickLogo = () => {
+  router.push({ path: '/home' })
+}
 // getCurrentLanguage()
 // const userStatus = window.localStorage.getItem('userStatus') || 0
 </script>
 <template>
   <div class="header-common">
-    <img src="../../assets/images/layout/logo.png" alt="airbnb" class="logo" />
+    <img
+      src="../../assets/images/layout/logo.png"
+      alt="airbnb"
+      class="logo"
+      @click="clickLogo"
+    />
     <el-menu
       :default-active="activeIndex"
       :ellipsis="false"
