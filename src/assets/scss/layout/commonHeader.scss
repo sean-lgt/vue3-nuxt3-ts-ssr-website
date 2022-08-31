@@ -1,7 +1,8 @@
 .header-common{
   display: flex;
   justify-content: space-between;
-  width: 100vw;
+  width: 100%;
+  box-sizing: border-box;
   height: 80px;
   position: relative;
   align-items: center;

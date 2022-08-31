@@ -50,10 +50,14 @@
 
 // 封装 start
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-
+console.log('🚀【sdasafs】', import.meta.env.VITE_REQUEST_BASE_URL)
 const DEFAULT_CONFIG = {
   timeout: 5000,
-  baseUrl: ''
+  baseURL: import.meta.env.VITE_REQUEST_BASE_URL || '' // 直接通过环境变量取值  axios在服务器上默认为80端口
+
+  // baseURL: import.meta.env.PROD
+  //   ? 'http://110.42.184.111'
+  //   : 'http://127.0.0.1:3000'
 }
 
 class Http {
