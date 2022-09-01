@@ -18,6 +18,7 @@ export interface IAllStateTypes {
   cityCode: string
   roomDetail: object
   roomId: number | null
+  orderVisible: boolean
 }
 
 // 定义 injection key
@@ -45,7 +46,8 @@ export const createSSRStore = () => {
       total: 0, // 总数
       cityCode: 'hz', // 城市编码
       roomDetail: {}, // 房屋详情
-      roomId: null
+      roomId: null,
+      orderVisible: false
     },
     mutations: {
       setCount(state, payload) {
@@ -84,6 +86,11 @@ export const createSSRStore = () => {
       setRoomId(state, payload) {
         state.roomId = payload
         return state.roomId
+      },
+      // 设置订单列表是否显示
+      setOrderVisible(state, payload) {
+        state.orderVisible = payload
+        return state.orderVisible
       }
     },
     actions: {

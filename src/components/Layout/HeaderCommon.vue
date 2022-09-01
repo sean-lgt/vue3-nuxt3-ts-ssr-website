@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { ref, getCurrentInstance, onMounted } from 'vue'
+import {
+  ref,
+  getCurrentInstance,
+  onMounted,
+  defineAsyncComponent,
+  Suspense
+} from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'vuex'
@@ -17,7 +23,11 @@ const { proxy } = getCurrentInstance()!
 const store = useStore(storeKey)
 const router = useRouter()
 const { t, locale } = useI18n()
-const activeIndex = ref('records')
+const OrderPopover = defineAsyncComponent(
+  () => import('@/views/order/components/orderPopover.vue')
+) // 异步加载组件
+
+const activeIndex = ref('')
 // changeLang
 const emit = defineEmits<{ (e: 'changeLang', language: any): void }>()
 const handleSelect = (e: any) => {
@@ -35,6 +45,8 @@ const handleSelect = (e: any) => {
     router.push({ name: 'login' })
   } else if (e === 'logout') {
     handleLogout()
+  } else if (e === 'orders') {
+    store.commit('setOrderVisible', true)
   }
   console.log('🚀【点击el-menu】', e)
 }
@@ -110,7 +122,19 @@ const clickLogo = () => {
       mode="horizontal"
       @select="handleSelect"
     >
-      <el-menu-item index="orders"> {{ t('header.orders') }}</el-menu-item>
+      <el-menu-item index="orders">
+        {{ t('header.orders') }}
+        <template v-if="store.state.orderVisible">
+          <Suspense>
+            <template #default>
+              <OrderPopover></OrderPopover>
+            </template>
+            <template #fallback>
+              <div class="loading-block">loading ...</div>
+            </template>
+          </Suspense>
+        </template>
+      </el-menu-item>
       <el-menu-item index="records">{{ t('header.records') }}</el-menu-item>
       <el-sub-menu index="language">
         <template #title>{{ t('header.language') }}</template>
