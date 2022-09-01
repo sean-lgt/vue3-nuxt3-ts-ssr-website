@@ -13,7 +13,7 @@ import { key as storeKey } from '@/store'
 
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import en from 'element-plus/lib/locale/lang/en'
-import { saveLanguageApi, fetchLanguageApi } from '../../api/layout/index'
+import { saveLanguageApi, getCurrentLanguageApi } from '../../api/layout/index'
 import { userLogoutApi } from '../../api/login/index'
 
 import { IResultOr } from '@/api/interface'
@@ -80,7 +80,7 @@ const handleLogout = () => {
 // }
 // mock接口 获取当前语言包
 const getCurrentLanguage = () => {
-  fetchLanguageApi().then((res) => {
+  getCurrentLanguageApi().then((res) => {
     const { success, result } = res
     const { name } = result || {}
     if (success) {

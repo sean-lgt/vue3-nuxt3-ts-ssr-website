@@ -61,7 +61,7 @@ export async function saveLanguageApi(lang: any) {
 }
 
 // Mock接口 获取当前语言包
-export async function fetchLanguageApi() {
+export async function getCurrentLanguageApi() {
   const loading = ElLoading.service({
     lock: true,
     background: 'rgba(0,0,0,0.1)'

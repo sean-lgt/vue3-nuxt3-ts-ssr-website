@@ -19,6 +19,7 @@ export interface IAllStateTypes {
   roomDetail: object
   roomId: number | null
   orderVisible: boolean
+  route?: object
 }
 
 // 定义 injection key

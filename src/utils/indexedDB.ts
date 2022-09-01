@@ -15,7 +15,7 @@ export default class DB {
   public openStore(stores: any) {
     console.log('🚀【拿到的stores】', stores)
     // 数据库名、版本号
-    const request = window.indexedDB.open(this.dbName, 4)
+    const request = window.indexedDB.open(this.dbName, 5)
     // const request = indexedDB.open(this.dbName, 4)
     return new Promise((resolve, reject) => {
       request.onsuccess = (event: any) => {

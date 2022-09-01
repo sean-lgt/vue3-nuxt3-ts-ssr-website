@@ -1,26 +1,30 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
-const count = ref(0)
-const fetchApi = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      count.value = 6
-      resolve(true)
-    }, 1500)
+import { ref, reactive } from 'vue'
+import { getOrderApi } from '@/api/order'
+let orderData = reactive<Array<any>>([]) // 订单列表数据
+// 在异步组件中需要返回一个 promise 实例
+const fetchOrderList = () => {
+  return getOrderApi().then((res) => {
+    const { result, success, message } = res
+    console.log(result)
+    if (success) {
+      orderData = result
+    } else {
+      console.log('🚀【列表数据失败】', message)
+    }
   })
 }
-await fetchApi()
+await fetchOrderList()
 </script>
 
 <template>
   <div class="order-popover-wrapper">
-    <ul>
-      <li v-for="i in count" :key="i">
-        <img src="../../../assets/images/home/banner.jpg" alt="" />
+    <ul v-if="orderData.length > 0">
+      <li v-for="(item, index) in orderData" :key="index">
+        <img :src="item.pictureUrl" />
         <div class="mess">
-          <p class="title">北京四合院</p>
-          <p class="info">234/晚 * 1个人</p>
+          <p class="title">{{ item.title }}</p>
+          <p class="info">{{ item.price }}/晚 * {{ item.personNumber }}个人</p>
         </div>
       </li>
     </ul>

@@ -47,10 +47,12 @@ export default function useFormOperates(
       const { status } = result
       if (success) {
         // 成功
-        console.log('🚀【登录成功】')
+        console.log('🚀【登录成功】', result)
         // proxy?.$message.success(message)
         // 存储登录态
         // window.localStorage.setItem('userStatus', status)
+        const { status, userId } = result
+        localStorage.setItem('userId', userId)
         store.commit('setUserStatus', status)
         router.push({ path: '/home' })
         // window.location.href = '/home' // 刷新当前页面

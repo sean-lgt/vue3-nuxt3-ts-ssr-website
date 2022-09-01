@@ -1,17 +1,43 @@
 <script setup lang="ts">
-import { reactive, computed } from 'vue'
+import { reactive, computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { useStore } from '@/store'
+import { saveOrderApi } from '@/api/order'
 
 const store = useStore()
+const route = useRoute()
 
 const roomDetail: any = computed(() => store.state.roomDetail)
 
 const orderForm = reactive({
   personNumber: 1
 })
+const orderFormRef = ref()
 // 提交表单
 const submitForm = () => {
   console.log('🚀【点击提交表单】')
+  handleSaveOrder()
+}
+const handleSaveOrder = () => {
+  const { id: orderId } = route.params
+  const { title, price, imgs } = roomDetail.value
+  const { personNumber } = orderForm
+  const params = {
+    orderId,
+    title,
+    price,
+    personNumber,
+    pictureUrl: imgs[0]
+  }
+  saveOrderApi(params).then((res) => {
+    // console.log('🚀【保存订单】', res)
+    const { success } = res
+    if (success) {
+      console.log('🚀【预定成功】', res)
+    } else {
+      console.log('🚀【预定失败】')
+    }
+  })
 }
 </script>
 <template>
@@ -75,7 +101,7 @@ const submitForm = () => {
             / 晚
           </p>
           <el-form
-            ref="orderForm"
+            ref="orderFormRef"
             :model="orderForm"
             label-position="top"
             class="order-ruleForm"
