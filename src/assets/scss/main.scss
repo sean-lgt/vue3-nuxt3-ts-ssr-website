@@ -19,3 +19,13 @@ body{
 .loading-block{
   @include placeholder-order(center);
 }
+
+.full-screen-mask{
+  position:fixed;
+  width: 100%;
+  background-color: transparent;
+  z-index: 10;
+  left:0;
+  top:0;
+  height: 100%;
+}

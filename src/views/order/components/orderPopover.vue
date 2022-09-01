@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import { useStore } from '@/store'
 import { getOrderApi } from '@/api/order'
+
+const store = useStore()
 let orderData = reactive<Array<any>>([]) // 订单列表数据
 // 在异步组件中需要返回一个 promise 实例
 const fetchOrderList = () => {
@@ -15,9 +18,18 @@ const fetchOrderList = () => {
   })
 }
 await fetchOrderList()
+
+// 关闭遮罩和popover
+const closeMask = () => {
+  store.commit('setOrderVisible', false)
+}
 </script>
 
 <template>
+  <!-- vue3新特性 将 DOM 移出组件 -->
+  <Teleport to="#app">
+    <div class="full-screen-mask" @click="closeMask"></div>
+  </Teleport>
   <div class="order-popover-wrapper">
     <ul v-if="orderData.length > 0">
       <li v-for="(item, index) in orderData" :key="index">
