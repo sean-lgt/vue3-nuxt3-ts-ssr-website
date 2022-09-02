@@ -46,7 +46,7 @@ export async function saveLanguageApi(lang: any) {
   // 进行新增或者修改操作
   const result: IResultOr = await airbnb.airbnbDB
     .updateItem(storeName, obj)
-    .then((res) => {
+    .then(() => {
       setTimeout(() => {
         loading.close()
       }, 500)

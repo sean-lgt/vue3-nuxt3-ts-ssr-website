@@ -44,7 +44,7 @@ export default function useFormOperates(
   function userLogin(): void {
     userLoginApi(params).then((res: IResultOr) => {
       const { success, message, result } = res
-      const { status } = result
+      // const { status } = result
       if (success) {
         // 成功
         console.log('🚀【登录成功】', result)

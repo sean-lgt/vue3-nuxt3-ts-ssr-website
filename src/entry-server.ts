@@ -3,7 +3,6 @@
  */
 
 import { createApp } from '@/main'
-import { link } from 'fs'
 import { renderToString } from 'vue/server-renderer'
 
 export async function render(url: string, manifest: any) {
@@ -26,6 +25,7 @@ export async function render(url: string, manifest: any) {
           route: router.currentRoute
         })
       }
+      return Component
     })
   )
   // 渲染上下文

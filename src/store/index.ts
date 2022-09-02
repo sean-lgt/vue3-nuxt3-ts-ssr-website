@@ -95,7 +95,7 @@ export const createSSRStore = () => {
       }
     },
     actions: {
-      fetchCount({ commit, state }, payload) {
+      fetchCount({ commit }, payload) {
         setTimeout(() => {
           commit('setCount', payload)
         }, 3000)
@@ -134,7 +134,7 @@ export const createSSRStore = () => {
         })
       },
       // 房屋详情接口
-      fetchRoomDetail({ commit, state }, payload: IRoomDetailParams) {
+      fetchRoomDetail({ commit }, payload: IRoomDetailParams) {
         return new Promise((resolve) => {
           getRoomDetail(payload).then((res) => {
             const { success, result } = res
@@ -179,7 +179,7 @@ export const store = createStore<IAllStateTypes>({
     }
   },
   actions: {
-    fetchCount({ commit, state }, payload) {
+    fetchCount({ commit }, payload) {
       setTimeout(() => {
         commit('setCount', payload)
       }, 3000)

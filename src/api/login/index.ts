@@ -10,7 +10,6 @@
 import { ElLoading } from 'element-plus'
 import { IResultOr } from '../interface'
 import airbnb from '../../db' // 引入数据库和对象仓库
-import { reject } from 'lodash'
 
 const storeName = Object.keys(airbnb.userObjectStore)[0]
 
@@ -32,6 +31,7 @@ export async function userSignApi(params: any) {
             // 存在相同手机号
             return resolve(true)
           }
+          return item
         })
       return resolve(false)
     })
@@ -39,7 +39,7 @@ export async function userSignApi(params: any) {
 
   let result: IResultOr
   if (hasMobile) {
-    result = await new Promise((resolve, reject) => {
+    result = await new Promise((resolve) => {
       resolve({
         code: '000001',
         success: false,
@@ -50,8 +50,8 @@ export async function userSignApi(params: any) {
   } else {
     const obj = { status: 0 }
     Object.assign(params, obj) // 合并
-    result = await new Promise((resolve, reject) => {
-      airbnb.airbnbDB.updateItem(storeName, params).then((res) => {
+    result = await new Promise((resolve) => {
+      airbnb.airbnbDB.updateItem(storeName, params).then(() => {
         setTimeout(() => {
           loading.close()
         }, 200)
@@ -74,7 +74,7 @@ export async function userLoginApi(params: any) {
     background: 'rgba(0, 0, 0, 0.1)'
   })
   // 校验手机号和密码是否正确
-  const correct: any = await new Promise((resolve, reject) => {
+  const correct: any = await new Promise((resolve) => {
     airbnb.airbnbDB.getList(storeName).then((res: any) => {
       setTimeout(() => {
         loading.close()
@@ -90,6 +90,7 @@ export async function userLoginApi(params: any) {
               resolve({ code: '000002' })
             }
           }
+          return item
         })
       // 其他
       resolve({ code: '000004' })
@@ -97,7 +98,7 @@ export async function userLoginApi(params: any) {
   })
   let result: IResultOr
   if (correct.code !== '000000') {
-    result = await new Promise((resolve, reject) => {
+    result = await new Promise((resolve) => {
       resolve({
         code: correct.code,
         success: false,
@@ -116,8 +117,8 @@ export async function userLoginApi(params: any) {
     localStorage.setItem('token', token)
     const obj = { status: 1, userId: correct.userId, token }
     Object.assign(params, obj)
-    result = await new Promise((resolve, reject) => {
-      airbnb.airbnbDB.updateItem(storeName, params).then((res) => {
+    result = await new Promise((resolve) => {
+      airbnb.airbnbDB.updateItem(storeName, params).then(() => {
         setTimeout(() => {
           loading.close()
         }, 200)
@@ -140,7 +141,7 @@ export async function userLogoutApi() {
     background: 'rgba(0, 0, 0, 0.1)'
   })
   // 根据用户token更改登录态为0
-  const correct: any = await new Promise((resolve, reject) => {
+  const correct: any = await new Promise((resolve) => {
     airbnb.airbnbDB.getList(storeName).then((res: any) => {
       setTimeout(() => {
         loading.close()
@@ -161,7 +162,7 @@ export async function userLogoutApi() {
   })
   let result: IResultOr
   if (correct.code === '000005') {
-    result = await new Promise((resolve, reject) => {
+    result = await new Promise((resolve) => {
       resolve({
         code: '000005',
         success: false,
@@ -170,15 +171,15 @@ export async function userLogoutApi() {
       })
     })
   } else {
-    const params: any = await new Promise((resolve, reject) => {
+    const params: any = await new Promise((resolve) => {
       airbnb.airbnbDB.getItem(storeName, correct.userId).then((res) => {
         resolve(res)
       })
     })
     const obj = { status: 0, token: null }
     Object.assign(params, obj)
-    result = await new Promise((resolve, reject) => {
-      airbnb.airbnbDB.updateItem(storeName, params).then((res) => {
+    result = await new Promise((resolve) => {
+      airbnb.airbnbDB.updateItem(storeName, params).then(() => {
         setTimeout(() => {
           loading.close()
         }, 200)

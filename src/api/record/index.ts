@@ -13,7 +13,7 @@ export async function saveRecordApi(params: any) {
   // })
 
   // 判断是否存在相同的id
-  const hasRecordId = await new Promise((resolve, reject) => {
+  const hasRecordId = await new Promise((resolve) => {
     airbnb.airbnbDB.getList(storeName).then((res: any) => {
       setTimeout(() => {
         // loading.close()
@@ -24,13 +24,14 @@ export async function saveRecordApi(params: any) {
             // 存在相同订单Id
             resolve(true)
           }
+          return item
         })
       resolve(false)
     })
   })
   let result: IResultOr
   if (hasRecordId) {
-    result = await new Promise((resolve, reject) => {
+    result = await new Promise((resolve) => {
       resolve({
         code: '000001',
         success: false,
@@ -40,8 +41,8 @@ export async function saveRecordApi(params: any) {
     })
   } else {
     Object.assign(params, { userId })
-    result = await new Promise((resolve, reject) => {
-      airbnb.airbnbDB.updateItem(storeName, params).then((res) => {
+    result = await new Promise((resolve) => {
+      airbnb.airbnbDB.updateItem(storeName, params).then(() => {
         setTimeout(() => {
           // loading.close()
         }, 200)
@@ -64,7 +65,7 @@ export async function getRecordApi() {
     lock: true,
     background: 'rgba(0, 0, 0, 0.1)'
   })
-  const result: IResultOr = await new Promise((resolve, reject) => {
+  const result: IResultOr = await new Promise((resolve) => {
     airbnb.airbnbDB.getList(storeName).then((res: any) => {
       setTimeout(() => {
         loading.close()

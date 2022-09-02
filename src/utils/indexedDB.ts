@@ -49,7 +49,7 @@ export default class DB {
                 store.createIndex(v, v, { unique: false })
               )
             }
-            store.transaction.oncomplete = (e: any) => {
+            store.transaction.oncomplete = () => {
               console.log(`🚀【${storeName}】创建对象仓库成功`)
             }
           }

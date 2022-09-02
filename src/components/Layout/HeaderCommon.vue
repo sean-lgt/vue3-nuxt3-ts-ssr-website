@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import {
-  ref,
-  getCurrentInstance,
-  onMounted,
-  defineAsyncComponent,
-  Suspense
-} from 'vue'
+import { ref, getCurrentInstance, onMounted, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'vuex'
@@ -13,7 +7,7 @@ import { key as storeKey } from '@/store'
 
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import en from 'element-plus/lib/locale/lang/en'
-import { saveLanguageApi, getCurrentLanguageApi } from '../../api/layout/index'
+import { getCurrentLanguageApi } from '../../api/layout/index'
 import { userLogoutApi } from '../../api/login/index'
 
 import { IResultOr } from '@/api/interface'

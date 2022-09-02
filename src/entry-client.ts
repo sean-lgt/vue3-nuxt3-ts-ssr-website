@@ -58,6 +58,7 @@ router.isReady().then(() => {
             route: router.currentRoute
           })
         }
+        return Component
       })
     ).then(() => {
       // next()
