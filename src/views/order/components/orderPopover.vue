@@ -1,10 +1,18 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { getOrderApi } from '@/api/order'
 
 const store = useStore()
+const router = useRouter()
 let orderData = reactive<Array<any>>([]) // 订单列表数据
+
+// 关闭遮罩和popover
+const closeMask = () => {
+  store.commit('setOrderVisible', false)
+}
+
 // 在异步组件中需要返回一个 promise 实例
 const fetchOrderList = () => {
   return getOrderApi().then((res) => {
@@ -17,11 +25,18 @@ const fetchOrderList = () => {
     }
   })
 }
-await fetchOrderList()
-
-// 关闭遮罩和popover
-const closeMask = () => {
-  store.commit('setOrderVisible', false)
+// 判断是否已经登录
+if (store.state.userStatus) {
+  await fetchOrderList()
+} else {
+  closeMask() // 关闭遮罩
+  const { pathname } = window.location
+  router.replace({
+    path: '/login',
+    query: {
+      redirect: pathname
+    }
+  })
 }
 </script>
 
@@ -40,6 +55,7 @@ const closeMask = () => {
         </div>
       </li>
     </ul>
+    <div v-else class="loading-block">暂无数据</div>
   </div>
 </template>
 

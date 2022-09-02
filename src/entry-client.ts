@@ -20,6 +20,8 @@ router.beforeEach((to, from, next) => {
     })
     .then((res: any) => {
       console.log('初始化所有对象仓库', res)
+      // store 登录数据持久化处理
+      localStorage.getItem('userId') && store.commit('setUserStatus', 1)
       next()
     })
 })

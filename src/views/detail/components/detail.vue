@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { reactive, computed, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { saveOrderApi } from '@/api/order'
 
 const store = useStore()
 const route = useRoute()
+const router = useRouter()
 
 const roomDetail: any = computed(() => store.state.roomDetail)
 
@@ -15,8 +16,21 @@ const orderForm = reactive({
 const orderFormRef = ref()
 // 提交表单
 const submitForm = () => {
+  console.log('🚀【pathname】', route)
   console.log('🚀【点击提交表单】')
-  handleSaveOrder()
+  if (store.state.userStatus === 1) {
+    handleSaveOrder()
+  } else {
+    // 未登录状态 需要跳转到登录页
+    // const pathname = route.fullPath
+    const { pathname } = window.location
+    router.replace({
+      path: '/login',
+      query: {
+        redirect: pathname
+      }
+    })
+  }
 }
 const handleSaveOrder = () => {
   const { id: orderId } = route.params

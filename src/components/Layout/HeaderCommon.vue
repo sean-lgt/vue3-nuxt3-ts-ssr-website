@@ -62,6 +62,7 @@ const handleLogout = () => {
       // 存储登录态
       // window.localStorage.setItem('userStatus', '0')
       store.commit('setUserStatus', 0)
+      localStorage.removeItem('userId')
       router.push({ path: '/login' })
     } else {
       proxy?.$message.error(message)
@@ -150,7 +151,7 @@ const clickLogo = () => {
         /></template>
         <el-menu-item index="logout">{{ t('login.logout') }}</el-menu-item>
       </el-sub-menu>
-      <el-menu-item index="login" v-if="store.state.userStatus != 1">
+      <el-menu-item index="login" v-else>
         {{ t('login.loginTab') }}/{{ t('login.signTab') }}
       </el-menu-item>
     </el-menu>

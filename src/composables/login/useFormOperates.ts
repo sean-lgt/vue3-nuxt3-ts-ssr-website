@@ -24,7 +24,7 @@ export default function useFormOperates(
   // 1、在页面或组件中，CurrentInstance一定存在，因此可以使用!强制标记存在
   // 2、使用as强转 getCurrentInstance() as ComponentInternalInstance
   const { proxy }: any = getCurrentInstance()
-  // const route = useRoute()
+  const route = useRoute()
   const store = useStore()
 
   function userSign(): void {
@@ -54,7 +54,8 @@ export default function useFormOperates(
         const { status, userId } = result
         localStorage.setItem('userId', userId)
         store.commit('setUserStatus', status)
-        router.push({ path: '/home' })
+        const { redirect = '/home' }: any = route.query
+        router.push({ path: redirect })
         // window.location.href = '/home' // 刷新当前页面
       } else {
         proxy?.$message.error(message)
