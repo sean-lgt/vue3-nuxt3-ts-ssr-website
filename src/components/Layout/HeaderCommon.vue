@@ -100,6 +100,7 @@ const getCurrentLanguage = () => {
     }
   })
 }
+// 服务端不会执行此钩子函数
 onMounted(() => {
   // fix:vite ssr window is not defined
   getCurrentLanguage()
