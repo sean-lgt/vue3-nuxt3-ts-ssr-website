@@ -12,7 +12,8 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "prepare": "husky install",
-    "lint": "eslint --fix",
+    "lint": "eslint src/**/*.{js,jsx,vue,ts,tsx} --fix",
+    "lint:fix": "eslint --fix",
     "prettier": "prettier --write .",
     "commit": "cz"
   },
