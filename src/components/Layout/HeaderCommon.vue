@@ -47,6 +47,8 @@ const handleSelect = (e: any) => {
     handleLogout()
   } else if (e === 'orders') {
     store.commit('setOrderVisible', true)
+  } else if (e === 'records') {
+    router.push({ path: '/record' })
   }
   console.log('🚀【点击el-menu】', e)
 }

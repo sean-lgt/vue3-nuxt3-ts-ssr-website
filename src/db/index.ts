@@ -6,6 +6,8 @@ import languageObjectStore from './objectStores/language'
 import userObjectStore from './objectStores/user'
 // 引入订单记录对象仓库
 import orderObjectStore from './objectStores/orders'
+// 引入浏览记录对象仓库
+import recordObjectStore from './objectStores/record'
 
 // 数据库
 export const airbnbDB = new DB('airbnb')
@@ -14,5 +16,6 @@ export default {
   airbnbDB,
   languageObjectStore,
   userObjectStore,
-  orderObjectStore
+  orderObjectStore,
+  recordObjectStore
 }

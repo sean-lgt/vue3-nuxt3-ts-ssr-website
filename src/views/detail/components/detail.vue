@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { reactive, computed, ref } from 'vue'
+import { reactive, computed, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { saveOrderApi } from '@/api/order'
+import { saveRecordApi } from '@/api/record'
 
 const store = useStore()
 const route = useRoute()
@@ -32,6 +33,7 @@ const submitForm = () => {
     })
   }
 }
+// 立即预定
 const handleSaveOrder = () => {
   const { id: orderId } = route.params
   const { title, price, imgs } = roomDetail.value
@@ -53,6 +55,34 @@ const handleSaveOrder = () => {
     }
   })
 }
+
+// 保存历史记录
+const handleSaveRecord = () => {
+  const { id: recordId } = route.params
+  const { title, price, imgs } = roomDetail.value
+  const { personNumber } = orderForm
+  const params = {
+    recordId,
+    title,
+    price,
+    personNumber,
+    pictureUrl: imgs[0]
+  }
+  saveRecordApi(params).then((res) => {
+    // console.log('🚀【保存订单】', res)
+    const { success } = res
+    if (success) {
+      console.log('🚀【加入足迹成功】', res)
+    } else {
+      console.log('🚀【加入足迹失败】')
+    }
+  })
+}
+
+setTimeout(() => {
+  handleSaveRecord()
+}, 2000)
+// })
 </script>
 <template>
   <div v-if="roomDetail && roomDetail.info && roomDetail.owner">

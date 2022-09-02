@@ -8,8 +8,13 @@ const home = () => import('@/views/home/index.vue')
 const mine = () => import('@/views/mine/index.vue')
 const login = () => import('@/views/login/index.vue')
 const roomDetail = () => import('@/views/detail/index.vue')
+const record = () => import('@/views/record/index.vue')
 
 const routes = [
+  {
+    path: '/',
+    redirect: '/home'
+  },
   {
     path: '/home',
     name: 'home',
@@ -43,6 +48,15 @@ const routes = [
     component: roomDetail,
     meta: {
       title: '房屋详情',
+      keepAlive: false
+    }
+  },
+  {
+    path: '/record',
+    name: 'record',
+    component: record,
+    meta: {
+      title: '历史足迹',
       keepAlive: false
     }
   }
