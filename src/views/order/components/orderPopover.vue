@@ -38,6 +38,15 @@ if (store.state.userStatus) {
     }
   })
 }
+
+// 点击跳转详情页
+const toDetail = (item: any) => {
+  console.log('🚀【sfdafsafdaga6164616418641646156】')
+  const { orderId: id } = item
+  router.push({ path: `/roomDetail/${id}` })
+  store.commit('setRoomId', id)
+  // closeMask() // 关闭遮罩
+}
 </script>
 
 <template>
@@ -47,7 +56,11 @@ if (store.state.userStatus) {
   </Teleport>
   <div class="order-popover-wrapper">
     <ul v-if="orderData.length > 0">
-      <li v-for="(item, index) in orderData" :key="index">
+      <li
+        v-for="(item, index) in orderData"
+        :key="index"
+        @click="toDetail(item)"
+      >
         <img :src="item.pictureUrl" />
         <div class="mess">
           <p class="title">{{ item.title }}</p>

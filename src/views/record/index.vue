@@ -34,6 +34,7 @@ const toDetail = (item: any) => {
 
 onMounted(() => {
   if (store.state.userStatus) {
+    console.log('🚀【sdfafasdfasfsaf】')
     fetchRecordList()
   } else {
     const { pathname } = window.location

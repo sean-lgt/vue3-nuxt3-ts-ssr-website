@@ -11,11 +11,12 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    // const route = useRoute()
-    // onBeforeUpdate(() => {
-    //   // DOM更新前调用接口，asyncData并不起作用，这里也可以使用onUpdated钩子
-    //   watchEffect(() => store.dispatch('getRoomDetail', route.params))
-    // })
+    const route = useRoute()
+    onBeforeUpdate(() => {
+      // DOM更新前调用接口，asyncData并不起作用，这里也可以使用onUpdated钩子
+      watchEffect(() => store.dispatch('fetchRoomDetail', route.params))
+      store.commit('setOrderVisible', false) // 若点击popover跳转至详情页面则关闭popover
+    })
   },
   // asyncData 属于自己定义的钩子函数，在里面只能 取store、route
   asyncData({ store, route }: any) {

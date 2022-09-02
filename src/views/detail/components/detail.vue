@@ -79,9 +79,11 @@ const handleSaveRecord = () => {
   })
 }
 
-setTimeout(() => {
-  handleSaveRecord()
-}, 2000)
+onMounted(() => {
+  setTimeout(() => {
+    handleSaveRecord() // 停留超过2s
+  }, 2000)
+})
 // })
 </script>
 <template>
