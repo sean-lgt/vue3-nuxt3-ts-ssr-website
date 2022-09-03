@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, computed, ref, onMounted } from 'vue'
+import { reactive, computed, watch, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { saveOrderApi } from '@/api/order'
@@ -10,6 +10,22 @@ const route = useRoute()
 const router = useRouter()
 
 const roomDetail: any = computed(() => store.state.roomDetail)
+// 监听store中数据逇变化，动态设置页面标题 title keywords description
+watch(
+  () => store.state.roomDetail,
+  (val: any) => {
+    if (val) {
+      document.title = `爱此迎-${val.title}`
+      // 设置页面 keywords 描述
+      const keywordsMeta = document.querySelector('meta[name="keywords"]')
+      keywordsMeta &&
+        keywordsMeta.setAttribute('content', `${val.owner.introduce}`)
+      // 设置页面 description
+      const descriptionMeta = document.querySelector('meta[name="description"]')
+      descriptionMeta?.setAttribute('content', `${val.owner.introduce}`)
+    }
+  }
+)
 
 const orderForm = reactive({
   personNumber: 1
@@ -37,6 +53,7 @@ const submitForm = () => {
 const handleSaveOrder = () => {
   const { id: orderId } = route.params
   const { title, price, imgs } = roomDetail.value
+  // const { title, price, imgs }: any = roomDetail
   const { personNumber } = orderForm
   const params = {
     orderId,
@@ -60,6 +77,7 @@ const handleSaveOrder = () => {
 const handleSaveRecord = () => {
   const { id: recordId } = route.params
   const { title, price, imgs } = roomDetail.value
+  // const { title, price, imgs }: any = roomDetail
   const { personNumber } = orderForm
   const params = {
     recordId,

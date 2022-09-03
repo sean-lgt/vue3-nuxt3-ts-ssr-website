@@ -69,3 +69,25 @@ router.isReady().then(() => {
   // 挂载完成后将由客户端接管操作
   app.mount('#app')
 })
+
+// 动态设置页面标题和描述信息
+router.afterEach((to) => {
+  const { roomDetail }: any = store.state
+  const { title: roomTitle = '', owner } = roomDetail || {}
+  const { introduce = '' } = owner || {}
+  const { meta } = to // 拿到路由中的信息
+  const { title, keywords, description } = meta
+  if (title && to.name !== 'roomDetail') {
+    document.title = `${title}${roomTitle}` // 动态设置页面标题
+  } else {
+    // 如果是房间详情页，则想重置下页面标题，数据是动态获取的
+    document.title = '爱此迎'
+  }
+  // 设置页面 keywords 描述
+  const keywordsMeta = document.querySelector('meta[name="keywords"]')
+  keywordsMeta &&
+    keywordsMeta.setAttribute('content', `${keywords}${introduce}`)
+  // 设置页面 description
+  const descriptionMeta = document.querySelector('meta[name="description"]')
+  descriptionMeta?.setAttribute('content', `${description}${introduce}`)
+})

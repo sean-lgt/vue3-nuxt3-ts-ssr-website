@@ -65,10 +65,26 @@ async function createServer() {
       const { appHtml, state, preloadLinks = '' } = await render(url, manifest)
 
       // 5. 注入渲染后的应用程序 HTML 到模板中。
+      // SEO 优化，增加 title、keywords、description
+      const { roomDetail } = state // 从store中取得一些信息
+      const { title: roomTitle = '', owner } = roomDetail || {}
+      const { introduce = '' } = owner || {}
+      const { meta } = state.route // 使用 vuex-router-sync 同步获取路由信息
+      const { title, keywords, description } = meta
+
       const html = template
         .replace('<!--preload-links-->', preloadLinks)
         .replace(`<!--ssr-outlet-->`, appHtml)
         .replace("'<!--vuex-state-->'", JSON.stringify(state))
+        .replace('<title>', `<title>${title}${roomTitle}`)
+        .replace(
+          '<meta name="keywords" content="" />',
+          `<meta name="keywords" content="${keywords}${introduce}" />`
+        )
+        .replace(
+          '<meta name="description" content="" />',
+          `<meta name="description" content="${description}${introduce}" />`
+        )
 
       // 6. 返回渲染后的 HTML。
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
