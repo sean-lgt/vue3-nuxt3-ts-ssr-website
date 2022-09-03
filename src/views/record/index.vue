@@ -50,19 +50,41 @@ onMounted(() => {
 <template>
   <div class="record-page">
     <div class="main-wrapper">
-      <div class="column-style" v-if="recordData.length > 0">
-        <div
-          class="item"
-          v-for="(item, index) in recordData"
-          :key="index"
-          @click="toDetail(item)"
-        >
-          <el-image :src="item.pictureUrl" :alt="item.title"></el-image>
-          <p class="title">{{ item.title }}</p>
-          <p class="price">￥{{ item.price }}</p>
-        </div>
-      </div>
-      <el-empty v-else description="暂无浏览记录"></el-empty>
+      <el-skeleton :loading="loading" animated>
+        <template #template>
+          <div class="column-style">
+            <div class="item" v-for="i in 9" :key="i">
+              <el-skeleton-item
+                variant="image"
+                style="width: 315px; height: 240px; border-radius: 4px"
+              ></el-skeleton-item>
+              <el-skeleton-item
+                variant="p"
+                style="width: 100%; margin-top: 15px"
+              ></el-skeleton-item>
+              <el-skeleton-item
+                variant="p"
+                style="width: 30%"
+              ></el-skeleton-item>
+            </div>
+          </div>
+        </template>
+        <template #default>
+          <div class="column-style" v-if="recordData.length > 0">
+            <div
+              class="item"
+              v-for="(item, index) in recordData"
+              :key="index"
+              @click="toDetail(item)"
+            >
+              <el-image :src="item.pictureUrl" :alt="item.title"></el-image>
+              <p class="title">{{ item.title }}</p>
+              <p class="price">￥{{ item.price }}</p>
+            </div>
+          </div>
+          <el-empty v-else description="暂无浏览记录"></el-empty>
+        </template>
+      </el-skeleton>
     </div>
   </div>
 </template>
