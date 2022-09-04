@@ -85,7 +85,7 @@ const getCurrentLanguage = () => {
       if (!result) {
         emit('changeLang', zhCn)
       } else {
-        if (name.name === 'zh') {
+        if (name.name === 'zh' || name.name === 'zh-cn') {
           emit('changeLang', zhCn)
         } else if (name.name === 'en') {
           emit('changeLang', en)

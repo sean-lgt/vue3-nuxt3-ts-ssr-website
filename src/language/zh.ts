@@ -45,5 +45,44 @@ export default {
     placePass: '请输入正确的密码',
     logout: '退出',
     loginLost: '您还未登录，请先登录哦~'
+  },
+  // 首页
+  home: {
+    h2Title: '跨年特惠房源',
+    subTitle: '品质房源，低至 5 折',
+    city: {
+      hz: '杭州',
+      sh: '上海',
+      nj: '南京',
+      cd: '成都',
+      cq: '重庆',
+      bj: '北京',
+      sz: '苏州'
+    }
+  },
+  // 详情页
+  detail: {
+    order: '立即预定',
+    night: '晚',
+    personNumber: '人数',
+    person: '人',
+    rooms: '间卧室',
+    beds: '张床',
+    bathrooms: '间卫生间',
+    living: '可住',
+    remarks: '评论',
+    nearSubway: '靠近地铁',
+    freeParking: '免费停车',
+    luggage: '可存放行李',
+    authenticated: '已验证身份',
+    landlord: '房东',
+    contact: '联系房东',
+    greatlandlord: '超赞房东',
+    reservated: '预定成功！'
+  },
+  // 公共
+  common: {
+    loading: '拼命加载中...',
+    empty: '空空如也 ~'
   }
 }

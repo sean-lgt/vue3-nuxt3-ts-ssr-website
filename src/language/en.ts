@@ -44,5 +44,44 @@ export default {
     placePass: 'Please white corret password',
     logout: 'Logout',
     loginLost: 'Please login first'
+  },
+  // 首页
+  home: {
+    h2Title: "New Year's Eve Discounts Housing Resource",
+    subTitle: 'Quality housing resource，Under 5 fold',
+    city: {
+      hz: 'Hangzhou',
+      sh: 'Shanghai',
+      nj: 'Nanjing',
+      cd: 'Chengdu',
+      cq: 'Chongqing',
+      bj: 'Beijing',
+      sz: 'Suzhou'
+    }
+  },
+  // 详情页
+  detail: {
+    order: 'Order',
+    night: 'Night',
+    personNumber: 'Number of people',
+    person: 'person',
+    rooms: 'Rooms',
+    beds: 'Beds',
+    bathrooms: 'Bathrooms',
+    living: 'Living',
+    remarks: 'Remarks',
+    nearSubway: 'Near the subway',
+    freeParking: 'Free Parking',
+    luggage: 'Deposit luggage',
+    authenticated: 'Authenticated',
+    landlord: 'Landlord',
+    contact: 'Contact the landlord',
+    greatlandlord: 'Great landlord',
+    reservated: 'Reservated successfully！'
+  },
+  // 通用 公共模块
+  common: {
+    loading: 'Loading...',
+    empty: 'Empty data ~'
   }
 }

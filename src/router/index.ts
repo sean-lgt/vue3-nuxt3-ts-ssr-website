@@ -84,7 +84,11 @@ const router = createRouter({
 export const createSSRRouter = () => {
   return createRouter({
     history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(),
-    routes
+    routes,
+    scrollBehavior(): void {
+      // 路由进行切换时，自动滚动到顶部
+      window.scrollTo(0, 0)
+    }
   })
 }
 

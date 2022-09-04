@@ -32,4 +32,16 @@ const changePage = (pageNo: number) => {
   ></el-pagination>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+.el-pagination.is-background .el-pager li:not(.is-disabled).is-active {
+  background-color: #055256 !important;
+  color: #fff !important;
+}
+.el-pagination.is-background .el-pager li:not(.is-disabled):hover {
+  color: #055256;
+}
+.el-pagination.is-background .btn-next:hover:not([disabled]),
+.el-pagination.is-background .btn-prev:hover:not([disabled]) {
+  color: #055256;
+}
+</style>

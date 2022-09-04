@@ -29,8 +29,8 @@ const clickDetail = (detailItem: any) => {
     <div class="home-list">
       <div
         class="item"
-        v-for="(item, index) in store.state.roomList"
-        :key="index"
+        v-for="item in store.state.roomList"
+        :key="item.id"
         @click="clickDetail(item)"
       >
         <img :src="item.pictureUrl" :alt="item.title" />

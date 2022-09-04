@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useStore } from '@/store'
+import { useI18n } from 'vue-i18n'
 import HomeList from './components/HomeList.vue'
 import { IRoomlistParams } from '@/api/interface'
 
@@ -10,9 +11,10 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-
+    const { t } = useI18n()
     return {
-      store
+      store,
+      t
     }
   },
   asyncData({ store, route }: any) {
@@ -30,8 +32,8 @@ export default defineComponent({
     <div class="banner"></div>
     <!-- 房屋列表 -->
     <div class="main-wrapper">
-      <h2 class="title">主标题</h2>
-      <p class="sub-title">副标题</p>
+      <h2 class="title">{{ t('home.h2Title') }}</h2>
+      <p class="sub-title">{{ t('home.subTitle') }}</p>
       <!-- 首页列表 -->
       <HomeList></HomeList>
     </div>

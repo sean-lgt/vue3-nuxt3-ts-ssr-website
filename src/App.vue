@@ -9,12 +9,12 @@ import { useI18n } from 'vue-i18n'
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 // import en from 'element-plus/lib/locale/lang/en'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
-import { key as storeKey } from '@/store'
+// import { useStore } from 'vuex'
+import { useStore } from '@/store'
 // import { getRoomList } from './api/index'
 
 const route = useRoute()
-const store = useStore(storeKey)
+const store = useStore()
 // console.log('🚀【import.meta.env】', import.meta.env)
 // const fetchList = async () => {
 //   const result = await getRoomList()
@@ -29,7 +29,7 @@ const localeLanguage = ref(zhCn)
 const changeLang = (lang: any) => {
   console.log('🚀【sdfasad】', lang)
   localeLanguage.value = lang
-  locale.value = lang.name
+  locale.value = lang.name === 'zh-cn' ? 'zh' : lang.name
 
   // console.log('🚀【lang】', locale.value)
 }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive, computed, watch, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useStore } from '@/store'
 import { saveOrderApi } from '@/api/order'
 import { saveRecordApi } from '@/api/record'
@@ -8,6 +9,7 @@ import { saveRecordApi } from '@/api/record'
 const store = useStore()
 const route = useRoute()
 const router = useRouter()
+const { t } = useI18n()
 
 const roomDetail: any = computed(() => store.state.roomDetail)
 // 监听store中数据逇变化，动态设置页面标题 title keywords description
@@ -127,21 +129,32 @@ onMounted(() => {
           <h2>{{ roomDetail.title }}</h2>
           <!-- 房屋信息 -->
           <div class="info">
-            <span class="room">{{ roomDetail.info.room }}间卧室</span>
-            <span class="bed">{{ roomDetail.info.bed }}张床</span>
-            <span class="toilet">{{ roomDetail.info.toilet }}间卫生间 </span>
+            <span class="room"
+              >{{ roomDetail.info.room }} {{ t('detail.rooms') }}</span
+            >
+            <span class="bed"
+              >{{ roomDetail.info.bed }} {{ t('detail.beds') }}</span
+            >
+            <span class="toilet"
+              >{{ roomDetail.info.toilet }} {{ t('detail.bathrooms') }}
+            </span>
             <span class="live-number">
-              可住{{ roomDetail.info.liveNumber }}人
+              可住{{ roomDetail.info.liveNumber }}
+              {{ t('detail.personNumber') }}
             </span>
           </div>
           <div class="tags">
-            <el-tag>{{ roomDetail.info.remarks }} 评论</el-tag>
-            <el-tag type="danger" v-if="roomDetail.info.metro">靠近地铁</el-tag>
+            <el-tag
+              >{{ roomDetail.info.remarks }} {{ t('detail.remarks') }}</el-tag
+            >
+            <el-tag type="danger" v-if="roomDetail.info.metro">{{
+              t('detail.nearSubway')
+            }}</el-tag>
             <el-tag type="warning" v-if="roomDetail.info.parking">
-              免费停车
+              {{ t('detail.freeParking') }}
             </el-tag>
             <el-tag type="success" v-if="roomDetail.info.luggage">
-              可存放行李
+              {{ t('detail.luggage') }}
             </el-tag>
           </div>
           <hr />
@@ -149,10 +162,14 @@ onMounted(() => {
           <div class="owner-detail">
             <img :src="roomDetail.owner.avatar" alt="" />
             <div class="info">
-              <p>房东：{{ roomDetail.owner.name }}</p>
+              <p>{{ t('detail.landlord') }}：{{ roomDetail.owner.name }}</p>
               <p>
-                <span v-if="roomDetail.owner.certify">已验证身份</span>
-                <span v-if="roomDetail.info.goodOwner">优质房东</span>
+                <span v-if="roomDetail.owner.certify">{{
+                  t('detail.authenticated')
+                }}</span>
+                <span v-if="roomDetail.info.goodOwner">{{
+                  t('detail.greatlandlord')
+                }}</span>
               </p>
             </div>
           </div>
@@ -162,7 +179,7 @@ onMounted(() => {
         <div class="form-part">
           <p class="price">
             <span>￥{{ roomDetail.price }}</span>
-            / 晚
+            / {{ t('detail.night') }}
           </p>
           <el-form
             ref="orderFormRef"
@@ -170,7 +187,7 @@ onMounted(() => {
             label-position="top"
             class="order-ruleForm"
           >
-            <el-form-item prop="personNumber" label="人数">
+            <el-form-item prop="personNumber" :label="t('detail.personNumber')">
               <!-- <el-select v-model="orderForm.personNumber">
                 <el-option
                   v-for="item in 3"
@@ -186,7 +203,9 @@ onMounted(() => {
               </select>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm">预定</el-button>
+              <el-button type="primary" @click="submitForm">{{
+                t('detail.order')
+              }}</el-button>
             </el-form-item>
           </el-form>
         </div>

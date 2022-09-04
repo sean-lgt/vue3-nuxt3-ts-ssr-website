@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useStore } from '@/store'
+import { useI18n } from 'vue-i18n'
 import { IRoomlistParams } from '@/api/interface'
 
 const store = useStore()
+const { t } = useI18n()
 const cityCode = ref(store.state.cityCode)
 const cityArr = [
   {
@@ -51,7 +53,7 @@ const cityClick = (tab: any) => {
     <el-tab-pane
       v-for="(item, index) in cityArr"
       :key="index"
-      :label="item.cityName"
+      :label="t(`home.city['${item.cityCode}']`)"
       :name="item.cityCode"
     ></el-tab-pane>
   </el-tabs>
