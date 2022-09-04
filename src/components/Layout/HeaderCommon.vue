@@ -108,50 +108,54 @@ const clickLogo = () => {
 </script>
 <template>
   <div class="header-common">
-    <img
-      src="../../assets/images/layout/logo.png"
-      alt="airbnb"
-      class="logo"
-      @click="clickLogo"
-    />
-    <el-menu
-      :default-active="activeIndex"
-      :ellipsis="false"
-      mode="horizontal"
-      @select="handleSelect"
-    >
-      <el-menu-item index="orders">
-        {{ t('header.orders') }}
-        <template v-if="store.state.orderVisible">
-          <Suspense>
-            <template #default>
-              <OrderPopover></OrderPopover>
-            </template>
-            <template #fallback>
-              <div class="loading-block">loading ...</div>
-            </template>
-          </Suspense>
-        </template>
-      </el-menu-item>
-      <el-menu-item index="records">{{ t('header.records') }}</el-menu-item>
-      <el-sub-menu index="language">
-        <template #title>{{ t('header.language') }}</template>
-        <el-menu-item index="zh">中文</el-menu-item>
-        <el-menu-item index="en">English</el-menu-item>
-      </el-sub-menu>
-      <el-sub-menu index="avatar" v-if="store.state.userStatus == 1">
-        <template #title>
-          <img
-            src="../../assets/images/layout/avatar.jpg"
-            alt="user-center"
-            class="avatar"
-        /></template>
-        <el-menu-item index="logout">{{ t('login.logout') }}</el-menu-item>
-      </el-sub-menu>
-      <el-menu-item index="login" v-else>
-        {{ t('login.loginTab') }}/{{ t('login.signTab') }}
-      </el-menu-item>
-    </el-menu>
+    <div class="header-common__left">
+      <img
+        src="../../assets/images/layout/logo.png"
+        alt="airbnb"
+        class="logo"
+        @click="clickLogo"
+      />
+    </div>
+    <div class="header-common__right">
+      <el-menu
+        :default-active="activeIndex"
+        :ellipsis="false"
+        mode="horizontal"
+        @select="handleSelect"
+      >
+        <el-menu-item index="orders">
+          {{ t('header.orders') }}
+          <template v-if="store.state.orderVisible">
+            <Suspense>
+              <template #default>
+                <OrderPopover></OrderPopover>
+              </template>
+              <template #fallback>
+                <div class="loading-block">loading ...</div>
+              </template>
+            </Suspense>
+          </template>
+        </el-menu-item>
+        <el-menu-item index="records">{{ t('header.records') }}</el-menu-item>
+        <el-sub-menu index="language">
+          <template #title>{{ t('header.language') }}</template>
+          <el-menu-item index="zh">中文</el-menu-item>
+          <el-menu-item index="en">English</el-menu-item>
+        </el-sub-menu>
+        <el-sub-menu index="avatar" v-if="store.state.userStatus == 1">
+          <template #title>
+            <img
+              src="../../assets/images/layout/avatar.jpg"
+              alt="user-center"
+              class="avatar"
+          /></template>
+          <el-menu-item index="logout">{{ t('login.logout') }}</el-menu-item>
+        </el-sub-menu>
+        <el-menu-item index="login" v-else>
+          {{ t('login.loginTab') }}/{{ t('login.signTab') }}
+        </el-menu-item>
+      </el-menu>
+    </div>
   </div>
 </template>
 

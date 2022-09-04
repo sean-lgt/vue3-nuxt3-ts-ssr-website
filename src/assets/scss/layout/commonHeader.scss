@@ -6,20 +6,27 @@
   height: 80px;
   position: relative;
   align-items: center;
-  .logo{
-    width: 200px;
-    height: auto;
-    position: absolute;
-    top: 17px;
-    left: 15px;
-    z-index: 10;
-    cursor: pointer;
+  .header-common__left{
+    padding-left: 25px;
+    .logo{
+      width: 200px;
+      height: auto;
+      // position: absolute;
+      // top: 17px;
+      // left: 15px;
+      z-index: 10;
+      cursor: pointer;
+    }
+  }
+  .header-common__right{
+    flex: 1;
+    justify-items: flex-end;
   }
   .el-menu{
     flex: 1;
     min-width: 800px;
     padding: 0 25px;
-    justify-content: right;
+    justify-content: flex-end;
     height: 80px;
     align-items: center;
     .el-menu-item{
