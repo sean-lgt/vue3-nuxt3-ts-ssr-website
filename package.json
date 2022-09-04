@@ -6,6 +6,7 @@
     "dev": "vite",
     "dev:ssr": "cross-env NODE_ENV=development node server",
     "prod:ssr": "cross-env NODE_ENV=production node server",
+    "prod:pm2": "cross-env NODE_ENV=production pm2 start server.js --name aircnc-server",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr src/entry-server.ts",
     "build:ssr": "npm run build:client && npm run build:server",
