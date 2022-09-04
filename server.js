@@ -20,7 +20,10 @@ async function createServer() {
     app.use(vite.middlewares)
   } else {
     // 生产环境
-    app.use(serveStatic(path.resolve(__dirname, 'dist/client')))
+    app.use(
+      serveStatic(path.resolve(__dirname, 'dist/client'), { index: false })
+    ) // 排除 index.html 的代码,在路由重定向中起重要作用
+    // express 收到对根路径 / 请求时，默认会找 index.html,或导致报错
   }
 
   app.use('*', async (req, res, next) => {
