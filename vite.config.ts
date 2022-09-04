@@ -5,10 +5,13 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
+import vitePluginCompression from 'vite-plugin-compression' // vite  开启代码压缩 插件
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue()
+    vue(),
+    vitePluginCompression()
     // 按需引入 ele-plus 服务端渲染需注释
     // AutoImport({
     //   resolvers: [ElementPlusResolver()]
