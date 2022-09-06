@@ -29,3 +29,11 @@ body{
   top:0;
   height: 100%;
 }
+
+.order-success-wrapper{
+  position: fixed;
+  width: 150px;
+  top: calc(50vh - 30px);
+  left: calc(50vw - 75px);
+  z-index: 101;
+}

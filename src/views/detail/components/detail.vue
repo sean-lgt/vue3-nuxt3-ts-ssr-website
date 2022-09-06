@@ -1,15 +1,24 @@
 <script setup lang="ts">
-import { reactive, computed, watch, ref, onMounted } from 'vue'
+import {
+  reactive,
+  computed,
+  watch,
+  ref,
+  onMounted,
+  getCurrentInstance
+} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useStore } from '@/store'
 import { saveOrderApi } from '@/api/order'
 import { saveRecordApi } from '@/api/record'
+import useToast from '@/composables/common/useToast'
 
 const store = useStore()
 const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
+const { proxy }: any = getCurrentInstance()
 
 const roomDetail: any = computed(() => store.state.roomDetail)
 // 监听store中数据逇变化，动态设置页面标题 title keywords description
@@ -33,6 +42,7 @@ const orderForm = reactive({
   personNumber: 1
 })
 const orderFormRef = ref()
+const { visibleToast, showToast } = useToast()
 // 提交表单
 const submitForm = () => {
   console.log('🚀【pathname】', route)
@@ -66,11 +76,13 @@ const handleSaveOrder = () => {
   }
   saveOrderApi(params).then((res) => {
     // console.log('🚀【保存订单】', res)
-    const { success } = res
+    const { success, message } = res
     if (success) {
       console.log('🚀【预定成功】', res)
+      showToast(2000)
     } else {
       console.log('🚀【预定失败】')
+      proxy.$message.error(message)
     }
   })
 }
@@ -107,6 +119,18 @@ onMounted(() => {
 // })
 </script>
 <template>
+  <!-- Toast 组件 -->
+  <Teleport to="#app" v-if="visibleToast">
+    <div class="order-success-wrapper">
+      <el-alert
+        :title="t('detail.reservated')"
+        type="success"
+        :closable="false"
+        center
+        show-icon
+      ></el-alert>
+    </div>
+  </Teleport>
   <div v-if="roomDetail && roomDetail.info && roomDetail.owner">
     <!-- 照片墙 -->
     <el-carousel
