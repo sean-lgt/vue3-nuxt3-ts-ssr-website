@@ -29,30 +29,33 @@ router.beforeEach((to, from, next) => {
 
 router.isReady().then(() => {
   // 所有路由都加载完毕后挂载
-  // 通过全局的路由守卫
+  // 通过全局的路由守卫，确保所有异步组件都会 resolve
   router.beforeResolve((to, from, next) => {
     // 对所有匹配的路由组件调用 asyncData
     const toComponents = router
       .resolve(to)
-      .matched.flatMap((record: any) => Object.values(record.components)) // 路由去的地址
+      .matched.flatMap((record: any) => Object.values(record.components)) // 路由去的地址  导航去的路由地址中所存在的组件
     const fromComponents = router
       .resolve(from)
-      .matched.flatMap((record: any) => Object.values(record.components)) // 路由过来的地址
+      .matched.flatMap((record: any) => Object.values(record.components)) // 路由过来的地址 导航来的路由地址中所存在的组件
     // 看路由匹配是否一致
+    // 通过比较差异组件来防止数据的二次预期
     const actived = toComponents.filter((c, i) => {
       return fromComponents[i] !== c
     })
     console.log('🚀【是否需要进行服务端预处理】', actived)
-
     if (!actived.length) {
-      return next() // 属于路由跳转的,直接跳转路由
+      return next() // 属于刷新页面的情况下，路由中的组件不存在差异化，直接取服务端预取的数据，进行路由跳转 next 并挂载
     } else {
       next()
     }
+    // 存在差异化组件 不是从服务端预取数据
+    // 这里执行客户端预取数据 asyncData 函数获取数据
     console.log('🚀【start----loading】')
     Promise.all(
       actived.map((Component: any) => {
         if (Component.asyncData) {
+          // 执行组件中的 asyncData 函数获取数据，asyncData 返回一个 Promise
           return Component.asyncData({
             store,
             route: router.currentRoute
