@@ -44,5 +44,15 @@ export default defineConfig({
         rewrite: (path) => path
       }
     }
+  },
+  // 配置打包相关参数
+  build: {
+    minify: 'terser', // 当设置为 'terser' 时必须先安装Terser  npm add -D terser
+    terserOptions: {
+      compress: {
+        drop_console: true, // 生产环境时移除console
+        drop_debugger: true // 生产环境时移除debugger
+      }
+    }
   }
 })
