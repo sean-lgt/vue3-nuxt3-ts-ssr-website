@@ -38,10 +38,10 @@ const changePage = (pageNo: number) => {
   color: #fff !important;
 }
 .el-pagination.is-background .el-pager li:not(.is-disabled):hover {
-  color: #055256;
+  color: #055256 !important;
 }
 .el-pagination.is-background .btn-next:hover:not([disabled]),
 .el-pagination.is-background .btn-prev:hover:not([disabled]) {
-  color: #055256;
+  color: #055256 !important;
 }
 </style>
