@@ -2,6 +2,57 @@
 
 This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
+# SSR方案初探
+## 同构渲染SSR两种方案：
+- 一种是使用开箱即用的 Nuxt3框架
+- 一种是基于单页面渐进式服务端渲染方案（同构）
+
+## SSR传统服务端渲染
+传统的服务渲染有：asp、jsp、ejs等，服务端语言往往同构这些模板引擎将数据和 dom 在服务端渲染完成，返回一个完整静态的 html 页面给客户端，由客户端直接显示。
+
+**原理**
+1. 客户端发送 http 请求
+2. 服务端响应 http 请求，返回拼接好的 html 字符串给客户端
+3. 客户端渲染 html
+   
+**缺点** 
+
+1. 前后端不分离，不好维护
+2. 用户体验不佳，需要重新加载页面
+3. 服务端压力大
+   
+## CSR 客户端渲染
+在现代的前端项目中，客户端渲染的代表性技术栈是 vue、react、angular，我们常常使用他们来构建客户端单页或者多页应用程序，以 SPA 构建程序为例，在浏览器首先渲染的是一套空的 html，通过 JS 借进行页面的渲染和路由跳转等操作，所有的数据通过 ajax 请求从服务器获取后，在进行客户端的拼接和展示。 
+
+**原理**
+1. 客户daunt发起 http 请求
+2. 服务端响应 http 请求，返回一个空的 html 文件
+3. 客户端初始化时加载必须的 js 文件，请求接口
+4. 将生成的 dom 插入到 html 中
+   
+**缺点** 
+
+1. 首屏加载慢
+2. 不利于SEO
+## 同构（现代服务端渲染）
+Vue、React 的 SSR 方案实际上就是同构渲染，我们现在讲的服务端渲染概念，是指在前端范畴或者说在 Vue、React 等单页面技术栈范畴内，基于 Node.js Server 运行环境的服务端渲染方案，通过在 Node.js 中运行应用程序的前端框架（例如 React、Vue 等）,将其渲染成HTML，最后再客户端进行注水化处理。简单来说，就是应用程序的大部分代码在服务器（node服务端）和客户端上运行，这就是所谓的现代服务端渲染：同构。
+
+**原理**
+1. 客户端发起 http 请求
+2. 服务端渲染把 Vue 实例转换成了静态的 html 发送给客户端
+3. 客户端渲染时需要把事件、响应式特性等 Vue 的特性都绑回去
+   
+**缺点** 
+1. 服务器压力大
+2. 涉及构建设置和部署更多要求
+3. 一些三方库可能需要特殊处理
+   
+**优点**
+1. 首屏加载速度快
+2. 前后端分离
+3. 利于 SEO
+4. 有一些现成框架：Nuxt.js、Next.js
+
 ## 项目结构目录
 
 ```
