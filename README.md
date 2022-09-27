@@ -2,6 +2,20 @@
 
 This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
+# 技术选型
+在开始一个前端项目之前，我们首先要做的就是技术调研和选型，比如：
+- 是否支持国际化
+- 是否需要SEO优化
+- 是否支持服务端渲染
+- 第三方框架的选择
+- 技术栈的选择
+- 代码管理工具
+- 是否需要混合开发，兼容多端
+- 是否需要进行响应式布局
+- 是否支持PWA
+- 是否微前端架构
+- 团队协作
+
 # SSR方案初探
 ## 同构渲染SSR两种方案：
 - 一种是使用开箱即用的 Nuxt3框架
