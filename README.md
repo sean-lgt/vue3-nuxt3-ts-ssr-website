@@ -153,3 +153,26 @@ Vue、React 的 SSR 方案实际上就是同构渲染，我们现在讲的服务
 ├── tsconfig.node.json
 └── vite.config.ts           # vite 项目配置
 ```
+
+# 使用husky触发git提交规范
+1. 安装husky `npx husky-init ; npm install` 
+2. 安装 commitizen git 提交规范：`npm install commitizen -D`
+3. 安装并初始化 cz-conventional-changelog：`npx commitizen init cz-conventional-changelog --save-dev --save-exact`
+4. 在 package.json 的 script 中配置命令：`"commit":"cz"`
+5. 安装 commitlint 限制提交规范，避免直接提交：`npm i @commitlint/config-conventional @commitlint/cli -D`
+6. 在项目根目录创建commitlint.config.cjs进行配置
+```
+module.exports = {
+  extends: ['@commitlint/config-conventional']
+}
+```
+7. 使用 husky 生成的 commit-msg 文件，验证提交信息
+8. 提交前先执行：`eslint src/**/*.{js,jsx,vue,ts,tsx} --fix`进行代码格式校验
+```
+// commit-msg
+npx --no-install commitlint --config commitlint.config.cjs --edit $1
+```
+```
+// pre-commit
+npm run lint
+```
